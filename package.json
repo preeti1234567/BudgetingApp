@@ -1,0 +1,26 @@
+{
+  "name": "BudgetingApp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "constant.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GabeSucich/BudgetingApp.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GabeSucich/BudgetingApp/issues"
+  },
+  "homepage": "https://github.com/GabeSucich/BudgetingApp#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.1.0",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.3"
+  }
+}
