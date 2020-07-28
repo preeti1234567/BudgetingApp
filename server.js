@@ -24,7 +24,7 @@ require('./routes/post_routes')(app)
 var db = require('./models')
 
 db.sequelize.sync({ force: true }).then(function () {
-    mapp.listen(PORT, function () {
+    app.listen(PORT, function () {
         console.log("Server listening on localhost:" + PORT)
     })
 
