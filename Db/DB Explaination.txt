@@ -1,0 +1,30 @@
+TABLE category
+ 
+type = Income, expense, unnecessary expense
+
+paycheck, stocks or some extra income will have a type of income
+rent, utility bill, medical, restaurant, grocery, transport will have a type of necessary expenses
+extra expenditure will have a type of unnecessary expenses
+
+
+we can declare the type as a global constant e.g. const Income =1; const Expense=2; const unnecessary expenses = 3;
+
+example row of catgory 
+Id, category_type, name
+1 1 paycheck
+2 1 bank interest
+3 2 rent
+4 3 dining out
+
+
+TABLE transaction
+Id,transaction_type,category_id,amount,date,user_profile_id
+1,1, 1,1250.00,07/01/2020,1
+2,0, 3,550.00,07/01/2020,1
+3,0, 4,50.00,07/03/2020,1
+3,1, 2,2.00,07/10/2020,1
+
+transaction type = Income and Expenditure
+category_id = refers to id of category table
+amount = how much he spend
+date = on which date
