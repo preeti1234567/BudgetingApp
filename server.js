@@ -1,6 +1,7 @@
 var express = require('express')
 var exphb = require('express-handlebars')
 var session = require("express-session");
+var db = require('./models')
 
 var passport = require('./config/passport')
 
@@ -20,17 +21,16 @@ app.engine("handlebars", exphb({
 app.set("view engine", 'handlebars')
 app.use(express.static("public"))
 
-require('./routes/api_routes')(app)
-require('./routes/post_routes')(app)
-require('./routes/html_routes')(app)
-
-var db = require('./models')
 
 app.use(session({ secret: "finanChill", resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-db.sequelize.sync({ force: true }).then(function () {
+require('./routes/api_routes')(app)
+require('./routes/post_routes')(app)
+require('./routes/html_routes')(app)
+
+db.sequelize.sync({ force: false }).then(function () {
     app.listen(PORT, function () {
         console.log("Server listening on localhost:" + PORT)
     })
