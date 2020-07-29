@@ -1,3 +1,11 @@
+var db = require("../models")
+var passport = require("../config/passport")
+module.exports = function(app) {
+    //Server routes go here
+}
+
+module.exports = function(app) {
+    
        //Get route for the income
        app.get("/api/income", function(req, res) {
         var current_id = req.user.id
@@ -6,6 +14,16 @@
         }}).then(function(data){
           res.json(data);
         });
+      });
+
+      app.post("/api/user/new", function(req, res) {
+        db.User.create(req.body).then(function(data) {
+          res.end()
+        })
+      })
+
+      app.post("/api/login", passport.authenticate("local"), function(req, res) {
+        res.json(req.user);
       });
 
       //Post route for the income

@@ -7,12 +7,14 @@ var isAuthenticated = require("../config/middleware/isAuthenticated");
 
 module.exports = function(app) {
     
-    app.get("/", async (req, res) => {
+    app.get("/", (req, res) => {
+    
         if (!req.user) {
-            res.render("login")
+            console.log(req.user)
+            res.sendFile(path.join(__dirname, "../public/login.html"))
         }
+        res.redirect("/dashboard")
         
-        res.redirect("/main")
     })
 
     async function getAllInfo(userId) {
