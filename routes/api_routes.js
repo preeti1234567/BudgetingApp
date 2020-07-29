@@ -1,12 +1,17 @@
        //Get route for the income
        app.get("/api/income", function(req, res) {
-        db.Income.findAll({}).then(function(data){
+        var current_id = req.user.id
+        db.Income.findAll({where: {
+          userId: current_id
+        }}).then(function(data){
           res.json(data);
         });
       });
 
       //Post route for the income
       app.post("/api/income", function(req, res) {
+        var current_id = req.user.id
+        req.body.userId = current_id
         db.Income.create(req.body);
         res.json(req.body);
       });

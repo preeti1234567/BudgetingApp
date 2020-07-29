@@ -1,0 +1,46 @@
+<h1>User Financials</h1>
+{{#each income}}
+    <ul>
+        <li>
+            Title: {{this.title}}<br>
+            Amount: {{this.amount}}<br>
+            Frequency: {{this.frequency}}<br>
+        </li>
+        
+    </ul>
+{{/each}}
+<label for = "job">Job Title: </label>
+<input type = "text" id = "job" name = "job">
+<label for = "amount">Amount: </label>
+<input type = "text" id = "amount" name = "amount">
+<label for="frequency">Frequency:</label>
+<select id="frequency" name="frequency">
+  <option value="daily">Daily</option>
+  <option value="monthly">Monthly</option>
+  <option value="yearly">Yearly</option>
+</select>
+
+<button type = "submit" id = "add-income">Add</button>
+
+{{#each necessaryExpenses}}
+    <ul>
+        <li>
+            Title: {{this.title}}<br>
+            Amount: {{this.amount}}<br>
+            Frequency: {{this.frequency}}<br>
+            Exceptions: {{this.exceptions}}<br>
+        </li>
+        
+    </ul>
+{{/each}}
+
+{{#each unnecessaryExpenses}}
+    <ul>
+        <li>
+            Title: {{this.title}}<br>
+            Amount: {{this.amount}}<br>
+            Frequency: {{this.frequency}}<br>
+        </li>
+        
+    </ul>
+{{/each}}
