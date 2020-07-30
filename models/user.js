@@ -1,4 +1,5 @@
 var bcrypt = require("bcryptjs");
+var moment = require("moment")
 
 module.exports = function (sequelize, DataTypes) {
   var User = sequelize.define("User", {
@@ -11,8 +12,19 @@ module.exports = function (sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+
+    lastSaveDate: {
+      type: DataTypes.STRING,
+      defaultValue: moment().format("YYYYMMDD")
+    },
+
+    lastSaveAmount: {
+      type: DataTypes.FLOAT,
+      defaultValue: 0
     }
 
+    
   });
 
   User.prototype.validPassword = function (password) {

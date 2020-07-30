@@ -10,9 +10,9 @@ module.exports = function (app) {
     app.get("/", (req, res) => {
         if (req.user) {
             res.redirect("/dashboard")
-        } 
+        }
         else {
-        res.redirect("/login")
+            res.redirect("/login")
         }
 
     })
@@ -21,14 +21,16 @@ module.exports = function (app) {
         if (req.user) {
             res.redirect("/dashboard")
         }
-        res.sendFile(path.join(__dirname, "../public/login.html"))
+        else {
+            res.sendFile(path.join(__dirname, "../public/login.html"))
+        }
     })
 
     async function getAllInfo(userId) {
         var income = await db.Income.findAll({ where: { userId: userId } })
-        var necesssaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })
+        var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })
         var unnecessaryExpenses = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
-        return { income: income, necesssaryExpenses: necesssaryExpenses, unnecessaryExpenses: unnecessaryExpenses }
+        return { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses }
     }
 
     app.get("/userfinancials", isAuthenticated, async (req, res) => {
@@ -42,18 +44,22 @@ module.exports = function (app) {
         if (req.user) {
             res.redirect("/dashboard")
         }
-        res.sendFile(path.join(__dirname, "../public/signup.html"))
+        else {
+            res.sendFile(path.join(__dirname, "../public/signup.html"))
+        }
     })
 
     app.get("/dashboard", isAuthenticated, async (req, res) => {
         var userId = req.user.id
         var allData = await getAllInfo(userId)
-        console.log(allData)
-        if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
+        
+        //if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
+        if (false) {
             res.redirect("/userfinancials")
         }
-        res.render("dashboard", allData)
-
+        else {
+            res.sendFile(path.join(__dirname, "../public/dashboard.html"))
+        }
     })
 
 

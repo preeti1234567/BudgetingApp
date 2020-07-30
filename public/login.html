@@ -34,7 +34,7 @@
             var username = $("#login-username").val().trim()
             var password = $("#login-password").val().trim()
             $.ajax({ method: "POST", url: "/api/login", data: { username: username, password: password } }).then(function () {
-                location.reload()
+                location.assign("/dashboard")
             })
         })
     </script>

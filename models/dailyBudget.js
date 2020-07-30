@@ -1,4 +1,4 @@
-var moment = require('moment')
+
 
 module.exports = function (sequelize, DataTypes) {
     var DailyBudget = sequelize.define("dailyBudget", {
@@ -37,13 +37,14 @@ module.exports = function (sequelize, DataTypes) {
         for (const row of necessaryExpenses) {
             totalSavings -= row.amount
         }
+        console.log("Running")
 
         return {dailySaving: totalSavings, date: date}
 
 
     }
 
-    return dailyBudget;
+    return DailyBudget;
 
 }
 
