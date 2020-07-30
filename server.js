@@ -27,10 +27,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/api_routes')(app)
-require('./routes/post_routes')(app)
 require('./routes/html_routes')(app)
 
-db.sequelize.sync({ force: false }).then(function () {
+db.sequelize.sync({ force: true }).then(function () {
     app.listen(PORT, function () {
         console.log("Server listening on localhost:" + PORT)
     })
