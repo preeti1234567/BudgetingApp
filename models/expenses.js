@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var NecessaryExpense =sequelize.define("NecessaryExpense", {
+    var NecessaryExpense = sequelize.define("NecessaryExpense", {
         title: DataTypes.STRING,
         amount: DataTypes.INTEGER,
         frequency: DataTypes.STRING,
