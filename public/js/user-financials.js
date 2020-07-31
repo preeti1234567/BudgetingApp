@@ -46,6 +46,7 @@ $(function () {
     else if($("#necessary-frequency").val().trim() === "daily"){
       newAmount = $("#necessary-amount").val().trim()
     }
+    console.log(newAmount)
     var newNecEx = {
       title: $("#necessary-expense").val().trim(),
       amount: newAmount,
@@ -64,36 +65,36 @@ $(function () {
     );
   })
 
-  // $(".add-unnecessary").on("click", function (event) {
-  //   event.preventDefault();
-  //   var newAmount;
-  //   if($("#unnecessary-frequency").val().trim() === "monthly"){
-  //     newAmount = $("#unnecessary-amount").val().trim()/30
-  //   }
-  //   else if($("#unnecessary-frequency").val().trim() === "yearly"){
-  //     newAmount = $("#unnecessary-amount").val().trim()/365
-  //   }
-  //   else if($("#unnecessary-frequency").val().trim() === "weekly"){
-  //     newAmount = $("#unnecessary-amount").val().trim()/7
-  //   }
-  //   else if($("#unnecessary-frequency").val().trim() === "daily"){
-  //     newAmount = $("#unnecessary-amount").val().trim()
-  //   }
-  //   var newUnEx = {
-  //     title: $("#unnecessary-expense").val().trim(),
-  //     amount: newAmount,
-  //     startDate: moment().format("YYYYMMDD"),
-  //     endDate: null,
-  //     UserId: null
-  //   }
-  //   $.ajax("/api/unnecessary-expense", {
-  //     type: "POST",
-  //     data: newUnEx
-  //   }).then(
-  //     function () {
-  //       console.log("created new income");
-  //       location.reload();
-  //     }
-  //   );
-  // })
+  $(".add-unnecessary").on("click", function (event) {
+    event.preventDefault();
+    var newAmount;
+    if($("#unnecessary-frequency").val().trim() === "monthly"){
+      newAmount = $("#unnecessary-amount").val().trim()/30
+    }
+    else if($("#unnecessary-frequency").val().trim() === "yearly"){
+      newAmount = $("#unnecessary-amount").val().trim()/365
+    }
+    else if($("#unnecessary-frequency").val().trim() === "weekly"){
+      newAmount = $("#unnecessary-amount").val().trim()/7
+    }
+    else if($("#unnecessary-frequency").val().trim() === "daily"){
+      newAmount = $("#unnecessary-amount").val().trim()
+    }
+    var newUnEx = {
+      title: $("#unnecessary-expense").val().trim(),
+      amount: newAmount,
+      startDate: moment().format("YYYYMMDD"),
+      endDate: null,
+      UserId: null
+    }
+    $.ajax("/api/unnecessary-expense", {
+      type: "POST",
+      data: newUnEx
+    }).then(
+      function () {
+        console.log("created new income");
+        location.reload();
+      }
+    );
+  })
 });

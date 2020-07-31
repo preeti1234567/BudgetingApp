@@ -15,7 +15,7 @@ module.exports = function (app) {
       res.json({
         username: req.user.username,
         id: req.user.userId,
-        startDate : req.user.createdAt.slice(0, 10)
+        startDate: req.user.createdAt.slice(0, 10)
       })
     }
   })
@@ -66,10 +66,13 @@ module.exports = function (app) {
 
     for (const expense of unnecessaryExpenses) {
       var exceptions = expense.exceptions
-      var exceptionsArr = exceptions.split(",")
-      if (date in exceptionsArr) {
-        delete unnecessaryExpenses.expense
+      if (exceptions) {
+        var exceptionsArr = exceptions.split(",") || []
+        if (date in exceptionsArr) {
+          delete unnecessaryExpenses.expense
+        }
       }
+
     }
   }
   function getSavingsforDate(expenseObj, date) {
@@ -127,8 +130,8 @@ module.exports = function (app) {
   app.post("/api/income", function (req, res) {
     var incomeObj = req.body
     incomeObj.UserId = req.user.id
-  
-    db.Income.create(incomeObj).then(function(result) {
+
+    db.Income.create(incomeObj).then(function (result) {
       res.json(result)
     })
 
@@ -137,10 +140,10 @@ module.exports = function (app) {
   //Post route for the necessary expense
   app.post("/api/necessary-expense", function (req, res) {
     req.body.UserId = req.user.id
-    db.NecessaryExpense.create(req.body).then(function(result) {
-       res.json(req.body);
+    db.NecessaryExpense.create(req.body).then(function (result) {
+      res.json(req.body);
     });
-   
+
   });
 
 
@@ -214,8 +217,10 @@ module.exports = function (app) {
   //Post route for the unnecessary expense
   app.post("/api/unnecessary-expense", function (req, res) {
     req.body.UserId = req.user.id
-    db.UnecessaryExpense.create(req.body);
-    res.json(req.body);
+    db.UnnecessaryExpense.create(req.body).then(function (result) {
+      res.json(result)
+    })
+      ;
   });
 
   //Delete route for the unnecessary expense

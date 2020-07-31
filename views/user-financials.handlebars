@@ -4,7 +4,7 @@
       <a href="#" class="brand-logo green lighten-4 black-text" style="margin-left: 3%;">FinanChill</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a class="black-text"href="/dashboard">Dashboard</a></li>
-        <li><a class="black-text" href="/user/financials">Manage User Financials</a></li>
+        <li><a class="black-text" href="/userfinancials">Manage User Financials</a></li>
         <li><a class="black-text" href="/api/logout">Logout</a></li>
       </ul>
     </div>
@@ -14,8 +14,8 @@
 {{#each income}}
     <ul>
         <li>
-            Title: {{this.title}}
-            Amount: {{this.amount}}/per month<br>
+            Title: {{this.title}}<br>
+            Average monthly amount: ${{this.amount}}<br>
             <hr>
         </li>
     </ul>
@@ -40,8 +40,7 @@
     <ul>
         <li>
             Title: {{this.title}}<br>
-            Amount: {{this.amount}}<br>
-            Exceptions: {{this.exceptions}}<br>
+            Average monthly cost: ${{this.amount}}<br>
         </li>
         
     </ul>
@@ -66,8 +65,7 @@
     <ul>
         <li>
             Title: {{this.title}}<br>
-            Amount: {{this.amount}}<br>
-            Exceptions: {{this.exceptions}}<br>
+            Average monthly cost: ${{this.amount}}<br>
         </li>
         
     </ul>
