@@ -40,24 +40,48 @@ module.exports = function (app) {
     var unnecessaryData = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
     const data = {
       income: incomeData.map(income => {
-        return {
-          title: income.title,
-          amount: (income.amount * 30)
+        if(!income.endDate){
+          return {
+            title: income.title,
+            amount: (income.amount * 30),
+            id: income.id
+          }
+        }
+        else{
+          return;
         }
       }),
       necessaryExpenses: necessaryData.map(nec => {
-        return {
-          title: nec.title,
-          amount: (nec.amount * 30)
+        if(!nec.endDate){
+          return {
+            title: nec.title,
+            amount: (nec.amount * 30),
+            id: nec.id
+          }
+        }
+        else{
+          return;
         }
       }),
       unnecessaryExpenses: unnecessaryData.map(un => {
-        return {
-          title: un.title,
-          amount: (un.amount * 30)
+        if(!un.endDate){
+          return {
+            title: un.title,
+            amount: (un.amount * 30),
+            id: un.id
+          }
+        }
+        else{
+          return {};
         }
       })
     }
+    for(var array in data){
+        data[array] = data[array].filter(function( element ) {
+          return element !== undefined;
+       });
+    }
+    console.log(data);
     res.render("user-financials", data)
   })
 
@@ -74,7 +98,7 @@ module.exports = function (app) {
     var userId = req.user.id
     var allData = await getAllInfo(userId)
 
-    if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
+    if (allData.income.length === 0 && allData.necessaryExpenses.length === 0) {
       res.redirect("/userfinancials")
     }
     else {

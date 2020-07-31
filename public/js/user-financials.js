@@ -97,4 +97,46 @@ $(function () {
       }
     );
   })
+
+  $(".remove-income").on("click", function(event){
+    event.preventDefault();
+    var newIncome = {endDate: moment().format("YYYYMMDD")};
+    var id = event.target.dataset.id;
+    $.ajax("/api/income/" + id, {
+      type: "PUT",
+      data: newIncome
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
+  })
+
+  $(".remove-necessary").on("click", function(event){
+    event.preventDefault();
+    var newNecessary = {endDate: moment().format("YYYYMMDD")};
+    var id = event.target.dataset.id;
+    $.ajax("/api/necessary-expense/" + id, {
+      type: "PUT",
+      data: newNecessary
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
+  })
+
+  $(".remove-unnecessary").on("click", function(event){
+    event.preventDefault();
+    var newUnnecessary = {endDate: moment().format("YYYYMMDD")};
+    var id = event.target.dataset.id;
+    $.ajax("/api/unnecessary-expense/" + id, {
+      type: "PUT",
+      data: newUnnecessary
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
+  })
 });
