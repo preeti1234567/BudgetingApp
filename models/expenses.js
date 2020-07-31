@@ -1,3 +1,5 @@
+var moment = require('moment')
+
 module.exports = function (sequelize, DataTypes) {
     var NecessaryExpense = sequelize.define("NecessaryExpense", {
         title: DataTypes.STRING,
@@ -5,8 +7,9 @@ module.exports = function (sequelize, DataTypes) {
         frequency: DataTypes.STRING,
         exceptions: DataTypes.TEXT,
         startDate: {
-        type: DataTypes.STRING,
-        allowNull: false
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: moment().format("YYYYMMDD")
         },
         endDate: DataTypes.STRING
     })

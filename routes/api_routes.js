@@ -14,6 +14,7 @@ module.exports = function (app) {
       res.json({
         username: req.user.username,
         id: req.user.userId,
+        startDate : req.user.createdAt.slice(0, 10)
       })
     }
   })
@@ -68,17 +69,17 @@ module.exports = function (app) {
 
     var totalSavings = 0
     for (const row of income) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings += row.amount
       }
     }
     for (const row of unnecessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
     for (const row of necessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
@@ -113,7 +114,7 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-    req.body.userId = req.user.id
+    req.body.UserId = req.user.id
     db.Income.create(req.body);
     res.json(req.body);
 
@@ -121,6 +122,7 @@ module.exports = function (app) {
 
   //Post route for the necessary expense
   app.post("/api/necessary-expense", function (req, res) {
+    req.body.UserId = req.user.id
     db.NecessaryExpense.create(req.body);
     res.json(req.body);
   });
@@ -150,7 +152,12 @@ module.exports = function (app) {
 
   //Get route for the necessary expense
   app.get("/api/necessary-expense", function (req, res) {
-    db.NecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.NecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
@@ -178,13 +185,19 @@ module.exports = function (app) {
 
   //Get route for the unnecessary expense
   app.get("/api/unnecessary-expense", function (req, res) {
-    db.UnecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.UnnecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
 
   //Post route for the unnecessary expense
   app.post("/api/unnecessary-expense", function (req, res) {
+    req.body.UserId = req.user.id
     db.UnecessaryExpense.create(req.body);
     res.json(req.body);
   });

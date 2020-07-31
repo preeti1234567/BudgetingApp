@@ -1,4 +1,4 @@
-
+var moment = require('moment')
 
 module.exports = function(sequelize, DataType) {
 var Income =sequelize.define("Income", {
@@ -6,7 +6,8 @@ var Income =sequelize.define("Income", {
     amount: DataType.INTEGER,
     startDate: {
         type: DataType.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultvalue: moment().format("YYYYMMDD")
     },
     endDate: DataType.STRING
  }

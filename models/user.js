@@ -12,16 +12,6 @@ module.exports = function (sequelize, DataTypes) {
     password: {
       type: DataTypes.STRING,
       allowNull: false
-    },
-
-    lastSaveDate: {
-      type: DataTypes.STRING,
-      defaultValue: moment().format("YYYYMMDD")
-    },
-
-    lastSaveAmount: {
-      type: DataTypes.FLOAT,
-      defaultValue: 0
     }
 
     
