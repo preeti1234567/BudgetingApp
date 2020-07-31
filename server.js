@@ -12,12 +12,7 @@ app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.engine("handlebars", exphb({
-    defaulyLayout: "main",
-    helpers: {
-    }
-})
-)
+app.engine("handlebars", exphb({defaulyLayout: "main"}))
 app.set("view engine", 'handlebars')
 app.use(express.static("public"))
 
