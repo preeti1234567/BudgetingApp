@@ -69,7 +69,7 @@ module.exports = function (app) {
 
     var totalSavings = 0
     for (const row of income) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings += row.amount
       }
     }
