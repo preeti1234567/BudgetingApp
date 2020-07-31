@@ -42,6 +42,16 @@ module.exports = function (app) {
     }
   })
 
+  app.get("/api/logout", (req, res) => {
+    if (req.user) {
+      req.logout()
+      res.redirect('/')
+    }
+    else {
+      res.redirect('/')
+    }
+  })
+
   app.get("/api/all", async (req, res) => {
     var userId = req.user.id
     var income = await db.Income.findAll({ where: { userId: userId } })
@@ -127,8 +137,10 @@ module.exports = function (app) {
   //Post route for the necessary expense
   app.post("/api/necessary-expense", function (req, res) {
     req.body.UserId = req.user.id
-    db.NecessaryExpense.create(req.body);
-    res.json(req.body);
+    db.NecessaryExpense.create(req.body).then(function(result) {
+       res.json(req.body);
+    });
+   
   });
 
 
@@ -281,6 +293,8 @@ module.exports = function (app) {
       }
     })
   });
+
+
 
   //Update route for the daily budget
   app.put("/api/daily-budget/:id", function (req, res) {
