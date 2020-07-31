@@ -1,5 +1,6 @@
 var db = require("../models")
-var passport = require("../config/passport")
+var passport = require("../config/passport");
+const income = require("../models/income");
 module.exports = function (app) {
   //Server routes go here
 }
@@ -38,6 +39,16 @@ module.exports = function (app) {
     }
     else {
       res.redirect("/signup")
+    }
+  })
+
+  app.get("/api/logout", (req, res) => {
+    if (req.user) {
+      req.logout()
+      res.redirect('/')
+    }
+    else {
+      res.redirect('/')
     }
   })
 
@@ -114,16 +125,22 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-    req.body.userId = req.user.id
-    db.Income.create(req.body);
-    res.json(req.body);
+    var incomeObj = req.body
+    incomeObj.UserId = req.user.id
+  
+    db.Income.create(incomeObj).then(function(result) {
+      res.json(result)
+    })
 
   });
 
   //Post route for the necessary expense
   app.post("/api/necessary-expense", function (req, res) {
-    db.NecessaryExpense.create(req.body);
-    res.json(req.body);
+    req.body.UserId = req.user.id
+    db.NecessaryExpense.create(req.body).then(function(result) {
+       res.json(req.body);
+    });
+   
   });
 
 
@@ -151,7 +168,12 @@ module.exports = function (app) {
 
   //Get route for the necessary expense
   app.get("/api/necessary-expense", function (req, res) {
-    db.NecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.NecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
@@ -179,13 +201,19 @@ module.exports = function (app) {
 
   //Get route for the unnecessary expense
   app.get("/api/unnecessary-expense", function (req, res) {
-    db.UnecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.UnnecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
 
   //Post route for the unnecessary expense
   app.post("/api/unnecessary-expense", function (req, res) {
+    req.body.UserId = req.user.id
     db.UnecessaryExpense.create(req.body);
     res.json(req.body);
   });
@@ -265,6 +293,8 @@ module.exports = function (app) {
       }
     })
   });
+
+
 
   //Update route for the daily budget
   app.put("/api/daily-budget/:id", function (req, res) {

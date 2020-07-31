@@ -26,9 +26,36 @@ module.exports = function (app) {
 
     app.get("/userfinancials", isAuthenticated, async (req, res) => {
         var userId = req.user.id
-        var allData = await getAllInfo(userId)
-        console.log(allData)
-        res.render("user-financials", allData)
+        var incomeData = await db.Income.findAll({ where: { userId: userId } })
+        const incobj = {
+            income: incomeData.map(income => {
+              return {
+                title: income.title,
+                amount: (income.amount*30)
+              }
+            })
+          }
+        res.render("user-financials", incobj)
+        var necessaryData = await db.NecessaryExpense.findAll({ where: { userId: userId } })
+        const necobj = {
+            necessaryExpenses: necessaryData.map(nec => {
+              return {
+                title: nec.title,
+                amount: (nec.amount*30)
+              }
+            })
+          }
+        res.render("user-financials", necobj)
+        var unnecessaryData = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
+        const unobj = {
+            unnecessaryExpenses: unnecessaryData.map(un => {
+              return {
+                title: un.title,
+                amount: (un.amount*30)
+              }
+            })
+          }
+        res.render("user-financials", unobj)
     })
 
     app.get("/signup", (req, res) => {
@@ -44,8 +71,7 @@ module.exports = function (app) {
         var userId = req.user.id
         var allData = await getAllInfo(userId)
         
-        //if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
-        if (false) {
+        if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
             res.redirect("/userfinancials")
         }
         else {

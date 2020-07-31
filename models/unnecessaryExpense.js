@@ -9,7 +9,6 @@ var UnnecessaryExpense =sequelize.define("UnnecessaryExpense", {
     exceptions: DataTypes.TEXT,
     startDate: {
         type: DataTypes.STRING,
-        allowNull: false,
         defaultValue: moment().format("YYYYMMDD")
     },
     endDate: DataTypes.STRING
@@ -34,7 +33,7 @@ UnnecessaryExpense.prototype.parseExceptions = function() {
 }
 
 UnnecessaryExpense.associate=function(models){
-    UnnecessaryExpense.belongsTo (models.User,{foreignKey: {allowNull:false }})
+    UnnecessaryExpense.belongsTo (models.User,{foreignKey: {allowNull:false}})
 }
 return UnnecessaryExpense;
     

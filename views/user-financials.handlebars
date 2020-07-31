@@ -1,32 +1,32 @@
 <script src="/js/user-financials.js"></script>
 <nav>
-    <div class="nav-wrapper">
-      <a href="#" class="brand-logo">Logo</a>
+    <div class="nav-wrapper green lighten-4">
+      <a href="#" class="brand-logo green lighten-4 black-text" style="margin-left: 3%;">FinanChill</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a href="/">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
+        <li><a class="black-text"href="/dashboard">Dashboard</a></li>
+        <li><a class="black-text" href="/user/financials">Manage User Financials</a></li>
+        <li><a class="black-text" href="/api/logout">Logout</a></li>
       </ul>
     </div>
   </nav>
-<h1>User Financials</h1>
+<center><h1>User Financials</h1></center>
+<h3>Income</h3>
 {{#each income}}
     <ul>
         <li>
-            Title: {{this.title}}<br>
-            Amount: {{this.amount}}<br>
-            Frequency: {{this.frequency}}<br>
+            Title: {{this.title}}
+            Amount: {{this.amount}}/per month<br>
+            <hr>
         </li>
-        
     </ul>
 {{/each}}
 <label for = "job">Job Title: </label>
 <input type = "text" id = "job" name = "job">
-<label for = "amount">Amount: </label>
-<input type = "text" id = "amount" name = "amount">
+<label for = "income-amount">Amount: </label>
+<input type = "text" id = "income-amount" name = "income-amount">
 
-<div id="frequency" class="input-field col s12">
-    <select style = "display:block">
+<div class="input-field col s12">
+    <select style = "display:block" id="income-frequency">
       <option>Choose your option</option>
       <option value="daily">Daily</option>
     <option value="monthly">Monthly</option>
@@ -35,26 +35,56 @@
   </div>
 <br>
 <button type = "submit" class = "add-income">Add</button>
-
+<h3>Necessary Expenses</h3>
 {{#each necessaryExpenses}}
     <ul>
         <li>
             Title: {{this.title}}<br>
             Amount: {{this.amount}}<br>
-            Frequency: {{this.frequency}}<br>
+            Exceptions: {{this.exceptions}}<br>
+        </li>
+        
+    </ul>
+{{/each}}
+<label for = "necessary-expense">Expense: </label>
+<input type = "text" id = "necessary-expense" name = "necessary-expense">
+<label for = "necessary-amount">Amount: </label>
+<input type = "text" id = "necessary-amount" name = "necessary-amount">
+
+<div class="input-field col s12">
+    <select style = "display:block" id="necessary-frequency">
+      <option>Choose your option</option>
+      <option value="daily">Daily</option>
+    <option value="monthly">Monthly</option>
+    <option value="yearly">Yearly</option>
+    </select>
+  </div>
+<br>
+<button type = "submit" class = "add-necessary">Add</button>
+<h3>Unnecessary Expenses</h3>
+{{#each unnecessaryExpenses}}
+    <ul>
+        <li>
+            Title: {{this.title}}<br>
+            Amount: {{this.amount}}<br>
             Exceptions: {{this.exceptions}}<br>
         </li>
         
     </ul>
 {{/each}}
 
-{{#each unnecessaryExpenses}}
-    <ul>
-        <li>
-            Title: {{this.title}}<br>
-            Amount: {{this.amount}}<br>
-            Frequency: {{this.frequency}}<br>
-        </li>
-        
-    </ul>
-{{/each}}
+<label for = "unnecessary-expense">Expense: </label>
+<input type = "text" id = "unnecessary-expense" name = "unnecessary-expense">
+<label for = "unnecessary-amount">Amount: </label>
+<input type = "text" id = "unnecessary-amount" name = "unnecessary-amount">
+
+<div class="input-field col s12">
+    <select style = "display:block" id="unnecessary-frequency">
+      <option>Choose your option</option>
+      <option value="daily">Daily</option>
+    <option value="monthly">Monthly</option>
+    <option value="yearly">Yearly</option>
+    </select>
+  </div>
+<br>
+<button type = "submit" class = "add-unnecessary">Add</button>
