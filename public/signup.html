@@ -7,18 +7,21 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col s12 m6 l4 push-m3 push-l4">
+        <div class="row" style="margin-top: 8%;">
+            <div class="col s12 m6 l6 push-m3 push-l3 center-align">
+                <img style="width: 60%;" src="./images/logo.png">
+                <h5 class="slogan" style="font-family: 'Solway', serif;">Register to start <span class="green-text">$</span>aving</h5>
                 <form>
-                    <input type="text" placeholder="username" id="signup-username">
-                    <input type="password" placeholder="password" id="signup-password">
+                    <input type="text" placeholder="username" id="signup-username" style="text-align: center;">
+                    <input type="password" placeholder="password" id="signup-password" style="text-align: center;">
                     <div class="center-align">
-                        <button type="submit" id="signup-submit">Create Account</button>
-                        <p>Or<a href="#" id="existing-account"> sign in </a>with an existing account</p>
+                        <a class="waves-effect green btn-small" id="signup-submit" style="margin-top: 3%;">Register!</a>
+                        <p>Or<a href="#" id="existing-account" style="color: green;"> sign in </a>with an existing account</p>
                     </div>
                 </form>
             </div>
