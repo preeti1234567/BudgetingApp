@@ -8,13 +8,12 @@ module.exports = function (sequelize, DataTypes) {
         exceptions: DataTypes.TEXT,
         startDate: {
             type: DataTypes.STRING,
-            allowNull: false,
             defaultValue: moment().format("YYYYMMDD")
         },
         endDate: DataTypes.STRING
     })
     NecessaryExpense.associate = function (models) {
-        NecessaryExpense.belongsTo(models.User, { foreignKey: { allowNull: false } })
+        NecessaryExpense.belongsTo(models.User, { foreignKey: {allowNull:false}})
     }
     return NecessaryExpense;
 }

@@ -1,5 +1,6 @@
 var db = require("../models")
-var passport = require("../config/passport")
+var passport = require("../config/passport");
+const income = require("../models/income");
 module.exports = function (app) {
   //Server routes go here
 }
@@ -114,9 +115,13 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-    req.body.userId = req.user.id
-    db.Income.create(req.body);
-    res.json(req.body);
+    console.log(req.user.id)
+    var incomeObj = req.body
+    incomeObj.UserId = req.user.id
+    console.log(incomeObj)
+    db.Income.create(incomeObj).then(function(result) {
+      res.json(result)
+    })
 
   });
 

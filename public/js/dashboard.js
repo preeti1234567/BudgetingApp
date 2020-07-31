@@ -1,94 +1,100 @@
 $(document).ready(function () {
-    $('.carousel').carousel();
 
-    displayCarousel('all')
+    $('.dropdown-trigger').dropdown();
 
-    function displayCarousel(budgetType) {
-        var carousel = $('.carousel')
-        $(carousel).empty()
+    displayFinancials('all')
+
+    $(".finance-choice").on("click", function() {
+        var id = $(this).attr('id')
+        displayFinancials(id)
+    })
+
+    function displayFinancials(budgetType) {
+        var financials = $('#financials')
+        $(financials).empty()
         $.ajax({ method: "GET", url: "/api/all" }).then(function (res) {
-
             console.log(res)
-            if (budgetType in ['income', 'all']) {
+            console.log(budgetType)
+            if (budgetType ==='all' || budgetType === 'income') {
                 for (const row of res.income) {
-                    $(carousel).append(createCard(row, "income"))
+                    console.log('running')
+                    var card = createCard(row, "income")
+                    console.log(card)
+                    $(financials).append(card)
                 }
             }
 
-            if (budgetType in ['necessary', 'all']) {
+            if (budgetType ==='all' || budgetType === 'necessary') {
                 for (const row of res.necessaryExpenses) {
-                    $(carousel).append(createCard(row, "necessary"))
+                    $(financials).append(createCard(row, "necessary"))
                 }
             }
 
-            if (budgetType in ['unnecessary', 'all']) {
+            if (budgetType ==='all' || budgetType === 'unnecessary') {
                 for (const row of res.unnecessaryExpenses) {
-                    $(carousel).append(createCard(row, "unnecessary"))
+                    $(financials).append(createCard(row, "unnecessary"))
                 }
             }
         })
     }
 
-    function createCard(rowElement, type) {
+    function createCard(rowElement, budgetType) {
 
-        if (type === "income") {
+        console.log(rowElement)
 
-            var carouselItem = $('<div class="carousel-item">')
-            var card = $('<div class="card green lighten-4">')
+        if (budgetType === "income") {
+
+            var card = $('<div class="card green lighten-4" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
-            expenseType.text("This is a source of income")
+            expenseType.text("Income")
             var averageDailyCost = $('<p>')
             averageDailyCost.text("+ $" + rowElement.amount + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
             card.append(cardContent)
-            carouselItem.append(card)
-
 
         }
 
-        else if (type === "necessary") {
-            var carouselItem = $('<div class="carousel-item">')
-            var card = $('<div class="card red lighten-2">')
+        else if (budgetType === "necessary") {
+            var card = $('<div class="card red lighten-2" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
-            expenseType.text("This is a necessary expense")
+            expenseType.text("Necessary Expense")
             var averageDailyCost = $('<p>')
             averageDailyCost.text("- $" + rowElement.amount + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
             card.append(cardContent)
-            carouselItem.append(card)
-
+    
 
         }
 
-        else if (type === "unnecessary") {
-
-            var carouselItem = $('<div class="carousel-item">')
-            var card = $('<div class="card red lighten-2">')
+        else if (budgetType === "unnecessary") {
+            
+            var card = $('<div class="card red lighten-2" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
-            expenseType.text("This is an unnecessary expense")
+            expenseType.text("Unnecessary expense")
             var averageDailyCost = $('<p>')
             averageDailyCost.text("- $" + rowElement.amount + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
             card.append(cardContent)
-            carouselItem.append(card)
 
 
         }
+
+        return card
 
 
     }
@@ -96,9 +102,18 @@ $(document).ready(function () {
     function stripDateDashes(date) {
         return date.replace(/-/g, "")
     }
+
+    function convertUTC(date) {
+        date = parseInt(date)
+        date -= 1
+        return String(date)
+    }
+
     function getDatesSince(startDate) {
         // startDate will already be stripped of dashes
         startDate = stripDateDashes(startDate)
+        startDate = convertUTC(startDate)
+        console.log(startDate)
         var stopDate = moment()
         var dateArray = [];
         var currentDate = moment(startDate)
@@ -157,7 +172,7 @@ $(document).ready(function () {
         var yCounter = 0
         for (i = 0; i < budgetHistory.length; i++) {
             xData.push(xCounter),
-                yData.push(budgetHistory[i])
+                yData.push(budgetHistory[i].dailySaving)
             xCounter++;
             yCounter++;
         }
@@ -166,6 +181,7 @@ $(document).ready(function () {
             labels: xData,
             series: [yData]
         };
+        console.log(data)
         new Chartist.Line('.ct-chart', data)
     }
 
