@@ -14,6 +14,7 @@ module.exports = function (app) {
       res.json({
         username: req.user.username,
         id: req.user.userId,
+        startDate : req.user.createdAt.slice(0, 10)
       })
     }
   })
@@ -68,17 +69,17 @@ module.exports = function (app) {
 
     var totalSavings = 0
     for (const row of income) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings += row.amount
       }
     }
     for (const row of unnecessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
     for (const row of necessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
@@ -113,7 +114,6 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-
     req.body.userId = req.user.id
     db.Income.create(req.body);
     res.json(req.body);

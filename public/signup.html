@@ -1,32 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@500&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <form>
-        <input type="text" placeholder="username" id="signup-username">
-        <input type="password" placeholder="password" id="signup-password">
-        <button type="submit" id="signup-submit">Submit</button>
-    </form>
+    <div class="container">
+        <div class="row" style="margin-top: 8%;">
+            <div class="col s12 m6 l6 push-m3 push-l3 center-align">
+                <img style="width: 60%;" src="./images/logo.png">
+                <h5 class="slogan" style="font-family: 'Solway', serif;">Register to start <span class="green-text">$</span>aving</h5>
+                <form>
+                    <input type="text" placeholder="username" id="signup-username" style="text-align: center;">
+                    <input type="password" placeholder="password" id="signup-password" style="text-align: center;">
+                    <div class="center-align">
+                        <a class="waves-effect green btn-small" id="signup-submit" style="margin-top: 3%;">Register!</a>
+                        <p>Or<a href="#" id="existing-account" style="color: green;"> sign in </a>with an existing account</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-        <script>
-            $('#signup-submit').on("click", function(event) {
-                event.preventDefault()
-                var username = $("#signup-username").val().trim()
-                var password = $("#signup-password").val().trim()
-                $.ajax({method: "POST", url:"/api/signup", data:{username: username, password: password}}).then(function(response) {
-                    location.assign('/dashboard')
-                })
+    <script>
+        $('#signup-submit').on("click", function (event) {
+            event.preventDefault()
+            var username = $("#signup-username").val().trim()
+            var password = $("#signup-password").val().trim()
+            $.ajax({ method: "POST", url: "/api/signup", data: { username: username, password: password } }).then(function (response) {
+                location.assign('/dashboard')
             })
-        </script>
-   
+        })
+
+        $('#existing-account').on("click", function(event) {
+            event.preventDefault()
+            location.assign('/login')
+        })
+    </script>
+
 </body>
+
 </html>

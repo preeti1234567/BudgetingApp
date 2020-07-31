@@ -7,17 +7,24 @@
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Solway:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col s4 m4 l4 push-s4 push-m4 push-l4">
+        <div class="row" style="margin-top: 8%;">
+            <div class="col s12 m6 l6 push-m3 push-l3 center-align">
+                <img style="width: 60%;" src="./images/logo.png">
+                <h2 class="title" style="margin-top:0px; font-family: 'Solway', serif;">FinanChill</h2>
+                <h5 class="slogan" style="font-family: 'Solway', serif;"><span class="green-text">$</span>tart <span class="green-text">$</span>aving</h5>
+                <h6 style="font-family: 'Solway', serif;">Oink Oink</h6>
+                <br>
                 <form>
                     <input class="center-align" type="text" placeholder="username" id="login-username">
                     <input class="center-align" type="password" placeholder="password" id="login-password">
                     <div class="center-align">
-                        <button type="submit" id="login-submit">Submit</button>
+                        <a class="waves-effect green btn-small" id="login-submit" style="margin-top: 3%;">Login!</a>
+                        <p>Or<a href="#" id="create-account" style="color:green"> create an account </a></p>
                     </div>
                 </form>
             </div>
@@ -36,6 +43,10 @@
             $.ajax({ method: "POST", url: "/api/login", data: { username: username, password: password } }).then(function () {
                 location.assign("/dashboard")
             })
+        })
+        $('#create-account').on("click", function(event) {
+            event.preventDefault()
+            location.assign("/signup")
         })
     </script>
 

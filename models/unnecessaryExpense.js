@@ -9,7 +9,8 @@ var UnnecessaryExpense =sequelize.define("UnnecessaryExpense", {
     exceptions: DataTypes.TEXT,
     startDate: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        defaultValue: moment().format("YYYYMMDD")
     },
     endDate: DataTypes.STRING
  }
