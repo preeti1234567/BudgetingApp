@@ -172,10 +172,9 @@ $(document).ready(function () {
         var yCounter = 0
         for (i = 0; i < budgetHistory.length; i++) {
             xData.push(xCounter),
-
-            yData.push(budgetHistory[i].dailySaving)
+            yCounter += budgetHistory[i].dailySaving
+            yData.push(yCounter)
             xCounter++;
-            yCounter++;
         }
 
         var data = {

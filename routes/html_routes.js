@@ -80,8 +80,7 @@ module.exports = function (app) {
         var userId = req.user.id
         var allData = await getAllInfo(userId)
         
-        //if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
-        if (false) {
+        if (allData.income.length === 0 && allData.necesssaryExpenses.length === 0) {
             res.redirect("/userfinancials")
         }
         else {
