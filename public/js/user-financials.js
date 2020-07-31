@@ -1,6 +1,7 @@
 $(function () {
   $(".add-income").on("click", function (event) {
     event.preventDefault();
+
     var newAmount;
     if($("#income-frequency").val().trim() === "monthly"){
       newAmount = $("#income-amount").val().trim()/30
@@ -19,14 +20,12 @@ $(function () {
       amount: newAmount,
       startDate: moment().format("YYYYMMDD"),
       endDate: null,
-      UserId: null
     }
     $.ajax("/api/income", {
       type: "POST",
       data: newIncome
     }).then(
       function () {
-        console.log("created new income");
         location.reload();
       }
     );
