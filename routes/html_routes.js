@@ -11,10 +11,10 @@ module.exports = function(app) {
     
         if (!req.user) {
             console.log(req.user)
-            res.sendFile(path.join(__dirname, "../public/login.html"))
+            res.sendFile(path.join(__dirname, "../public/login.html"));
+          
         }
-        res.redirect("/dashboard")
-        
+        res.redirect("/dashboard")        
     })
 
     async function getAllInfo(userId) {
