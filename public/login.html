@@ -12,12 +12,13 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col s4 m4 l4 push-s4 push-m4 push-l4">
+            <div class="col s12 m6 l4 push-m3 push-l4">
                 <form>
                     <input class="center-align" type="text" placeholder="username" id="login-username">
                     <input class="center-align" type="password" placeholder="password" id="login-password">
                     <div class="center-align">
                         <button type="submit" id="login-submit">Submit</button>
+                        <p>Or<a href="#" id="create-account"> create an account </a></p>
                     </div>
                 </form>
             </div>
@@ -36,6 +37,10 @@
             $.ajax({ method: "POST", url: "/api/login", data: { username: username, password: password } }).then(function () {
                 location.assign("/dashboard")
             })
+        })
+        $('#create-account').on("click", function(event) {
+            event.preventDefault()
+            location.assign("/signup")
         })
     </script>
 

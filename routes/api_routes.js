@@ -74,12 +74,12 @@ module.exports = function (app) {
       }
     }
     for (const row of unnecessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
     for (const row of necessaryExpenses) {
-      if (parseInt(row.startDate) <= parseInt(date) && row.endDate && parseInt(row.endDate) >= parseInt(date)) {
+      if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
         totalSavings -= row.amount
       }
     }
