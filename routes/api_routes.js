@@ -113,7 +113,6 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-
     req.body.userId = req.user.id
     db.Income.create(req.body);
     res.json(req.body);
