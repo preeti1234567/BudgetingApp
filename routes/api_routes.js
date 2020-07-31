@@ -14,6 +14,7 @@ module.exports = function (app) {
       res.json({
         username: req.user.username,
         id: req.user.userId,
+        startDate : req.user.createdAt.slice(0, 10)
       })
     }
   })

@@ -17,16 +17,17 @@ function getDatesSince(startDate) {
 }
 
 
-
 async function getBudgetData() {
     $.ajax({ method: "GET", url: "/api/user_data" }).then(function (res) {
         var startDate = res.startDate
+        console.log(startDate)
         startDate = stripDateDashes(startDate)
         var dateArr = getDatesSince(startDate)
         var budgetHistory = []
 
         function makeCall(counter, expenseObj) {
             if (counter === dateArr.length) {
+                console.log(budgetHistory)
                 renderHistory(budgetHistory)
             }
             else {
@@ -45,7 +46,6 @@ async function getBudgetData() {
 
         $.ajax({ method: "GET", url: "/api/all" }).then(response => {
             var expenseObj = response
-
             for (key in expenseObj) {
                 var array = expenseObj[key]
                 expenseObj[key] = JSON.stringify(array)
@@ -58,7 +58,22 @@ async function getBudgetData() {
 }
 
 function renderHistory(budgetHistory) {
-    console.log(budgetHistory)
+    var xData = [0]
+    var yData = [0]
+    var xCounter = 1
+    var yCounter = 0
+    for (i=0; i<budgetHistory.length; i++) {
+        xData.push(xCounter),
+        yData.push(budgetHistory[i])
+        xCounter++;
+        yCounter++;
+    }
+
+    var data = {
+      labels: xData,
+      series: [yData]
+    };
+    new Chartist.Line('.ct-chart', data)
 }
 
 console.log("Im here")
