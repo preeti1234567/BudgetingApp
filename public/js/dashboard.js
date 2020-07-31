@@ -172,7 +172,8 @@ $(document).ready(function () {
         var yCounter = 0
         for (i = 0; i < budgetHistory.length; i++) {
             xData.push(xCounter),
-                yData.push(budgetHistory[i].dailySaving)
+
+            yData.push(budgetHistory[i].dailySaving)
             xCounter++;
             yCounter++;
         }
@@ -181,7 +182,7 @@ $(document).ready(function () {
             labels: xData,
             series: [yData]
         };
-        console.log(data)
+
         new Chartist.Line('.ct-chart', data)
     }
 

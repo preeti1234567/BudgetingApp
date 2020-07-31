@@ -115,10 +115,9 @@ module.exports = function (app) {
 
   //Post route for the income
   app.post("/api/income", function (req, res) {
-    console.log(req.user.id)
     var incomeObj = req.body
     incomeObj.UserId = req.user.id
-    console.log(incomeObj)
+  
     db.Income.create(incomeObj).then(function(result) {
       res.json(result)
     })
@@ -127,6 +126,7 @@ module.exports = function (app) {
 
   //Post route for the necessary expense
   app.post("/api/necessary-expense", function (req, res) {
+    req.body.UserId = req.user.id
     db.NecessaryExpense.create(req.body);
     res.json(req.body);
   });
@@ -156,7 +156,12 @@ module.exports = function (app) {
 
   //Get route for the necessary expense
   app.get("/api/necessary-expense", function (req, res) {
-    db.NecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.NecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
@@ -184,13 +189,19 @@ module.exports = function (app) {
 
   //Get route for the unnecessary expense
   app.get("/api/unnecessary-expense", function (req, res) {
-    db.UnecessaryExpense.findAll({}).then(function (data) {
+    var current_id = req.user.id
+    db.UnnecessaryExpense.findAll({
+      where: {
+        userId: current_id
+      }
+    }).then(function (data) {
       res.json(data);
     });
   });
 
   //Post route for the unnecessary expense
   app.post("/api/unnecessary-expense", function (req, res) {
+    req.body.UserId = req.user.id
     db.UnecessaryExpense.create(req.body);
     res.json(req.body);
   });
