@@ -279,7 +279,7 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
 
   //Update route for the unnecessary expense
   app.put("/api/unnecessary-expense/:id", function (req, res) {
-    db.UnecessaryExpense.update(req.body, {
+    db.UnnecessaryExpense.update(req.body, {
       where: {
         id: req.params.id
       }

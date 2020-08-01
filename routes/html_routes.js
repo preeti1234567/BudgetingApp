@@ -74,7 +74,7 @@ module.exports = function (app) {
           }
         }
         else{
-          return {};
+          return;
         }
       }),
       oneTimePurchase: oneTimePurchase.map(otp => {
