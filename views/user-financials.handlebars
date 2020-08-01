@@ -24,7 +24,7 @@
         {{#each income}}
         <li class="collection-item">
           <strong>Title: </strong>{{this.title}}<br>
-          <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+          <strong>Average monthly amount: $</strong>{{round this.amount}}<br>
           <button class="green lighten-4 btn" style="margin-top: 5px"><i data-id="{{this.id}}"
               class="remove-income green-text material-icons">delete</i></button>
         </li>
@@ -71,7 +71,7 @@
         {{#each necessaryExpenses}}
         <li class="collection-item">
           <strong>Title: </strong>{{this.title}}<br>
-          <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+          <strong>Average monthly amount: $</strong>{{round this.amount}}<br>
           <button class="green lighten-4 btn" style="margin-top: 5px"><i data-id="{{this.id}}"
               class="remove-necessary green-text material-icons">delete</i></button>
         </li>
@@ -118,7 +118,7 @@
         {{#each unnecessaryExpenses}}
         <li class="collection-item">
           <strong>Title: </strong>{{this.title}}<br>
-          <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+          <strong>Average monthly amount: $</strong>{{round this.amount}}<br>
           <button class="green lighten-4 btn" style="margin-top: 5px"><i data-id="{{this.id}}"
               class="remove-unnecessary green-text material-icons">delete</i></button>
         </li>
@@ -165,12 +165,14 @@
         </li>
         {{#if this.oneTimePurchase}}
         {{#each oneTimePurchase}}
+        {{#unless this.date}}
         <li class="collection-item">
           <strong>Title: </strong>{{this.title}}<br>
-          <strong>Amount: $</strong>{{this.amount}}<br>
+          <strong>Amount: $</strong>{{round this.amount}}<br>
           <button class="green lighten-4 btn" style="margin-top: 5px"><i data-id="{{this.id}}"
               class="remove-oneTimePurchase green-text material-icons">delete</i></button>
         </li>
+        {{/unless}}
         {{/each}}
         {{/if}}
       </ul>
@@ -190,7 +192,7 @@
           </div>
         </div>
         <div class="col s2">
-          <button type="submit" style="margin-top: 20px; margin-left:20px" class="btn green add-income">Add</button>
+          <button type="submit" style="margin-top: 20px; margin-left:20px" class="btn green add-oneTimePurchase">Add</button>
         </div>
       </div>
     </div>

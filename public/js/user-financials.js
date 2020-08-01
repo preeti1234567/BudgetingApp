@@ -161,7 +161,7 @@ $(function () {
       type: "Delete"
     }).then(
       function () {
-        console.log("onetime=purchase deleted")
+        console.log("onetime-purchase deleted")
         location.reload();
       }
     );

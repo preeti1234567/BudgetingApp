@@ -5,89 +5,164 @@ $(document).ready(function () {
 
     displayFinancials('all')
 
-    $(".finance-choice").on("click", function() {
+    $(".finance-choice").on("click", function () {
         var id = $(this).attr('id')
+        console.log(id[0])
+        var upperCase = id[0].toUpperCase() + id.slice(1) + " " + completeLabel(id)
+        $('#dropdown').text(upperCase)
         displayFinancials(id)
+    })
+
+    function completeLabel(id) {
+        switch (id) {
+            case "necessary":
+                return "Expenses"
+            case "unnecessary":
+                return "Expenses"
+            case "One":
+                return "Time Purchases"
+            default:
+                return ""
+        }
+    }
+
+    $(document).on("click", ".purchase-btn", function() {
+        var id = $(this).attr("data-id")
+        console.log("working")
+        $.ajax({method: "PUT", url: "/api/onetime-purchase/" + id, data: {date: moment().format("YYYYMMDD")}}).then(function(res) {
+            location.reload()
+        })
+    })
+
+    $(document).on("click", ".onetime-delete", function() {
+        var id = $(this).attr("data-id")
+        $.ajax({method: "DELETE", url:"/api/onetime-purchase/" + id}).then(function() {
+            location.reload()
+        })
     })
 
     function displayFinancials(budgetType) {
         var financials = $('#financials')
         $(financials).empty()
+        financials.hide()
         var oneTimePurchase = $('#oneTimePurchase');
         $(oneTimePurchase).empty()
+        oneTimePurchase.hide()
         $.ajax({ method: "GET", url: "/api/all" }).then(function (res) {
             console.log(res)
             console.log(budgetType)
-            if (budgetType ==='all' && res.oneTimePurchase.length === 1) {
+
+            financialsArr = []
+
+            if (budgetType === 'all' || budgetType === 'income') {
+                for (const row of res.income) {
+                    if (!row.endDate) {
+                        console.log("running")
+                        var card = createCard(row, "income")
+                        // $(financials).append(card)
+                        financialsArr.push(card)
+                        financials.show()
+                    }
+                }
+            }
+
+            if (budgetType === 'all' || budgetType === 'necessary') {
+                for (const row of res.necessaryExpenses) {
+                    if (!row.endDate) {
+                        financialsArr.push((createCard(row, "necessary")))
+                        financials.show()
+                    }
+                }
+            }
+
+            if (budgetType === 'all' || budgetType === 'unnecessary') {
+                for (const row of res.unnecessaryExpenses) {
+                    if (!row.endDate) {
+                        financialsArr.push((createCard(row, "unnecessary")))
+                        financials.show()
+                    }
+                }
+            }
+
+            financialsArr.sort((a,b) => Math.abs($(b).attr("data-amount")) - Math.abs($(a).attr("data-amount")))
+
+            for (const card of financialsArr) {
+                $(financials).append(card)
+            }
+
+            if (budgetType === 'all' || budgetType === "One") {
                 var saving = 0;
                 for (const row of res.income) {
-                    saving = saving + row.amount
+                    if (!row.endDate) {
+                        saving = saving + row.amount
+                    }
                 }
                 for (const row of res.necessaryExpenses) {
-                    saving = saving - row.amount
+                    if (!row.endDate) {
+                        saving = saving - row.amount
+                    }
                 }
                 for (const row of res.unnecessaryExpenses) {
-                    saving = saving - row.amount
+                    if (!row.endDate) {
+                        saving = saving - row.amount
+                    }
                 }
-                $(oneTimePurchase).append(createCard({heading:"Daily Saving", amount: "$" + saving + " per day"}, "saving"))
-                $(oneTimePurchase).append(createCard({heading:"One Time Purchase",title:res.oneTimePurchase[0].title, amount: "Total Cost : $" + res.oneTimePurchase[0].amount }, "onetime"))
-                $(oneTimePurchase).append(createCard({heading:"One Time Purchase Estimate", amount: "You can purchase after " + Math.floor(res.oneTimePurchase[0].amount/saving) + " days" }, "estimate"))
-            }
-            
-            if (budgetType ==='all' || budgetType === 'income') {
-                for (const row of res.income) {
-                    
-                    var card = createCard(row, "income")
-                    console.log(card)
-                    $(financials).append(card)
-                }
-            }
 
-            if (budgetType ==='all' || budgetType === 'necessary') {
-                for (const row of res.necessaryExpenses) {
-                    $(financials).append(createCard(row, "necessary"))
-                }
-            }
-
-            if (budgetType ==='all' || budgetType === 'unnecessary') {
-                for (const row of res.unnecessaryExpenses) {
-                    $(financials).append(createCard(row, "unnecessary"))
+                for (const row of res.oneTimePurchase) {
+                    if (!row.date) {
+                        console.log(row)
+                        $(oneTimePurchase).append(createOneTime(row, saving))
+                        oneTimePurchase.show()
+                    }
                 }
             }
         })
     }
 
-    function createCard(rowElement, budgetType) {
-
-        console.log(rowElement)
-        if (budgetType === "saving" || budgetType === "onetime" || budgetType === "estimate") {
-            var card = $('<div class="card green lighten-4" style="display: inline-block; margin-right: 2%">')
-            var cardContent = $('<div class="card-content">')
-            var cardTitle = $('<span class="card-title">')
-            cardTitle.text(rowElement.heading)
-            if(rowElement.title !== ""){
-            var expenseType = $('<p>')
-            expenseType.text(rowElement.title)
-            }
-            var averageDailyCost = $('<p>')
-            averageDailyCost.text(rowElement.amount)
-            cardContent.append(cardTitle)
-            if(rowElement.title !== ""){cardContent.append(expenseType)}
-            cardContent.append(averageDailyCost)
-            card.append(cardContent)
-
+    function createOneTime(rowElement, savings) {
+        var card = $(`<div class="card blue-grey lighten-3 onetime-card center-align" style="display: inline-block" data-amount=${rowElement.amount}>`)
+        var cardContent = $('<div class="card-content">')
+        var cardTitle = $('<span class="card-title">')
+        cardTitle.text(rowElement.title)
+        var purchaseCost = $('<p>')
+        purchaseCost.text("Cost: $" + parseInt(rowElement.amount))
+        var averageDailySavings = $('<p>')
+        averageDailySavings.text("Current daily saving: $" + parseInt(savings))
+        var suggestion = $('<p>')
+        if (savings <= 0) {
+            suggestion.text("Right now, you are not saving enough to make this purchase")
         }
+        else {
+            var time = Math.ceil(rowElement.amount / savings)
+            suggestion.text("You will save enough or this purchase after " + time + " day(s)")
+        }
+        var cardButton = $(`<br><a style="margin-left:0" class="btn-flat black-text purchase-btn" data-id=${rowElement.id}>Make Purchase</a>`)
+        var deleteButton = $(`<a class="btn-floating btn-small waves-effect waves-light blue-grey darken-4 onetime-delete" data-id=${rowElement.id}><i class="material-icons">clear</i></a>`)
+        cardContent.append(cardTitle)
+        cardContent.append(purchaseCost)
+        cardContent.append(averageDailySavings)
+        cardContent.append(suggestion)
+        cardContent.append(cardButton)
+        card.append(cardContent)
+        card.append(deleteButton)
+
+        return card
+
+    }
+
+    function createCard(rowElement, budgetType) {
 
         if (budgetType === "income") {
 
-            var card = $('<div class="card green lighten-4" style="display: inline-block; margin-right: 2%">')
-            var cardContent = $('<div class="card-content">')
+            console.log("Making card")
+            var card = $('<div class="card green lighten-4 financial-card" style="display: inline-block; margin-right: 2%">')
+            var cardContent = $('<div class="card-content center-align">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Income")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("+ $" + rowElement.amount + " per day")
+            averageDailyCost.text("+ $" + parseInt(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
@@ -96,42 +171,41 @@ $(document).ready(function () {
         }
 
         else if (budgetType === "necessary") {
-            var card = $('<div class="card red lighten-2" style="display: inline-block; margin-right: 2%">')
-            var cardContent = $('<div class="card-content">')
+            var card = $('<div class="card red lighten-2 financial-card" style="display: inline-block; margin-right: 2%">')
+            var cardContent = $('<div class="card-content center-align">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Necessary Expense")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("- $" + rowElement.amount + " per day")
+            averageDailyCost.text("- $" + parseInt(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
             card.append(cardContent)
-    
+
 
         }
 
         else if (budgetType === "unnecessary") {
-            
-            var card = $('<div class="card red lighten-2" style="display: inline-block; margin-right: 2%">')
-            var cardContent = $('<div class="card-content">')
+            var card = $('<div class="card red lighten-2 financial-card" style="display: inline-block; margin-right: 2%">')
+            var cardContent = $('<div class="card-content center-align">')
             var cardTitle = $('<span class="card-title">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Unnecessary expense")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("- $" + rowElement.amount + " per day")
+            averageDailyCost.text("- $" + parseInt(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
             card.append(cardContent)
 
 
+
         }
 
         return card
-
 
     }
 
@@ -139,16 +213,9 @@ $(document).ready(function () {
         return date.replace(/-/g, "")
     }
 
-    function convertUTC(date) {
-        date = parseInt(date)
-        date -= 1
-        return String(date)
-    }
-
     function getDatesSince(startDate) {
         // startDate will already be stripped of dashes
         startDate = stripDateDashes(startDate)
-        startDate = convertUTC(startDate)
         console.log(startDate)
         var stopDate = moment()
         var dateArray = [];
@@ -167,6 +234,7 @@ $(document).ready(function () {
             var startDate = res.startDate
             startDate = stripDateDashes(startDate)
             var dateArr = getDatesSince(startDate)
+            console.log(dateArr)
             var budgetHistory = []
 
             function makeCall(counter, expenseObj) {
@@ -208,7 +276,7 @@ $(document).ready(function () {
         var yCounter = 0
         for (i = 0; i < budgetHistory.length; i++) {
             xData.push(xCounter),
-            yCounter += budgetHistory[i].dailySaving
+                yCounter += budgetHistory[i].dailySaving
             yData.push(yCounter)
             xCounter++;
         }

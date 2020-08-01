@@ -12,7 +12,14 @@ app = express()
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 
-app.engine("handlebars", exphb({defaulyLayout: "main"}))
+app.engine("handlebars", exphb({
+    defaulyLayout: "main",
+    helpers: {
+        round(number) {
+            return Math.ceil(number)
+        }
+    }
+}))
 app.set("view engine", 'handlebars')
 app.use(express.static("public"))
 
@@ -28,5 +35,4 @@ db.sequelize.sync({ force: false }).then(function () {
     app.listen(PORT, function () {
         console.log("Server listening on localhost:" + PORT)
     })
-
 })

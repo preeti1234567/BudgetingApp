@@ -1,0 +1,20 @@
+.onetime-delete {
+    position: absolute;
+    top: 5px;
+    right: 5px
+}
+
+.scroll-div {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: gray;
+}
+.card {
+    box-shadow: 10px 10px 5px;
+}
+
+.hidden {
+    display: none
+}
