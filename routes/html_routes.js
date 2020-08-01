@@ -72,7 +72,7 @@ module.exports = function (app) {
           }
         }
         else{
-          return {};
+          return;
         }
       })
     }

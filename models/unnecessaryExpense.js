@@ -5,7 +5,10 @@ module.exports = function(sequelize, DataTypes) {
 var UnnecessaryExpense =sequelize.define("UnnecessaryExpense", {
     title: DataTypes.STRING,
     amount: DataTypes.INTEGER,
-    frequency: DataTypes.STRING, 
+    frequency: {
+        type: DataTypes.STRING,
+        allowNull: false
+    }, 
     exceptions: DataTypes.TEXT,
     startDate: {
         type: DataTypes.STRING,

@@ -68,22 +68,24 @@ $(function () {
   $(".add-unnecessary").on("click", function (event) {
     event.preventDefault();
     var newAmount;
-    if($("#unnecessary-frequency").val().trim() === "monthly"){
+    var frequency = $("#unnecessary-frequency").val().trim()
+    if(frequency === "monthly"){
       newAmount = $("#unnecessary-amount").val().trim()/30
     }
-    else if($("#unnecessary-frequency").val().trim() === "yearly"){
+    else if(frequency === "yearly"){
       newAmount = $("#unnecessary-amount").val().trim()/365
     }
-    else if($("#unnecessary-frequency").val().trim() === "weekly"){
+    else if(frequency === "weekly"){
       newAmount = $("#unnecessary-amount").val().trim()/7
     }
-    else if($("#unnecessary-frequency").val().trim() === "daily"){
+    else if(frequency === "daily"){
       newAmount = $("#unnecessary-amount").val().trim()
     }
     var newUnEx = {
       title: $("#unnecessary-expense").val().trim(),
       amount: newAmount,
       startDate: moment().format("YYYYMMDD"),
+      frequency: frequency,
       endDate: null,
       UserId: null
     }
