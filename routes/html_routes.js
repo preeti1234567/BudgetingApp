@@ -30,7 +30,8 @@ module.exports = function (app) {
     var income = await db.Income.findAll({ where: { userId: userId } })
     var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })
     var unnecessaryExpenses = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
-    return { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses }
+    var oneTimePurchase = await db.oneTimePurchase.findAll({ where: { userId: userId } })
+    return { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses, oneTimePurchase:oneTimePurchase }
   }
 
   app.get("/userfinancials", isAuthenticated, async (req, res) => {
@@ -38,6 +39,7 @@ module.exports = function (app) {
     var incomeData = await db.Income.findAll({ where: { userId: userId } })
     var necessaryData = await db.NecessaryExpense.findAll({ where: { userId: userId } })
     var unnecessaryData = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
+    var oneTimePurchase = await db.oneTimePurchase.findAll({ where: { userId: userId } })
     const data = {
       income: incomeData.map(income => {
         if(!income.endDate){
@@ -74,6 +76,13 @@ module.exports = function (app) {
         else{
           return {};
         }
+      }),
+      oneTimePurchase: oneTimePurchase.map(otp => {
+          return {
+            title: otp.title,
+            amount: (otp.amount),
+            id: otp.id
+          }       
       })
     }
     for(var array in data){

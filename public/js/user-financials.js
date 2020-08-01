@@ -1,4 +1,45 @@
 $(function () {
+  //----------
+  $(".addOTP").on("click", function (event) {
+    event.preventDefault();
+
+    var newPurchaseAmount;
+    if($("#oneTimePurchase").val().trim() != ""){
+      newPurchaseAmount = $("#oneTimePurchase").val().trim()
+    }
+   
+    $.ajax("/api/one-timeexpense", {
+      type: "POST",
+      data: newPurchaseAmount
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
+  })
+
+  
+  
+  $(".add-oneTimePurchase").on("click", function (event) {
+    event.preventDefault();
+
+    var newAmount = $("#oneTimePurchase-amount").val().trim()
+    
+    var oneTimePurchase = {
+      title: $("#oneTimePurchase-title").val().trim(),
+      amount: newAmount,      
+    }
+    $.ajax("/api/onetime-purchase", {
+      type: "POST",
+      data: oneTimePurchase
+    }).then(
+      function () {
+        location.reload();
+      }
+    );
+  })
+  
+  //------------
   $(".add-income").on("click", function (event) {
     event.preventDefault();
 
@@ -111,6 +152,19 @@ $(function () {
       }
     );
   })
+  $(".remove-oneTimePurchase").on("click", function(event){
+    event.preventDefault();
+    var id = event.target.dataset.id;
+    $.ajax("/api/onetime-purchase/" + id, {
+      type: "Delete"
+    }).then(
+      function () {
+        console.log("onetime=purchase deleted")
+        location.reload();
+      }
+    );
+  })
+  
 
   $(".remove-necessary").on("click", function(event){
     event.preventDefault();
