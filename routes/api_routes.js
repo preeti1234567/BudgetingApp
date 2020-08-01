@@ -57,7 +57,8 @@ module.exports = function (app) {
     var income = await db.Income.findAll({ where: { userId: userId } })
     var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })
     var unnecessaryExpenses = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
-    expenseObj = { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses }
+    var oneTimePurchase = await db.oneTimePurchase.findAll({ where: { userId: userId } })
+    expenseObj = { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses,oneTimePurchase: oneTimePurchase}
     res.json(expenseObj)
   })
 
@@ -168,6 +169,50 @@ module.exports = function (app) {
     });
   });
 
+  //Post route for onetime-purchase
+  app.post("/api/onetime-purchase", function (req, res) {
+    var oneTimePurchase = req.body
+    oneTimePurchase.UserId = req.user.id
+
+    db.oneTimePurchase.create(oneTimePurchase).then(function (result) {
+      res.json(result)
+    })
+
+  });
+
+//Get route for the OneTimePurchase
+app.get("/api/onetime-purchase", function (req, res) {
+  var current_id = req.user.id
+  db.oneTimePurchase.findAll({
+    where: {
+      userId: current_id
+    }
+  }).then(function (data) {
+    res.json(data);
+  });
+});
+
+//Delete route for the OneTimePurchase
+app.delete("/api/onetime-purchase/:id", function (req, res) {
+  db.oneTimePurchase.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(function (data) {
+    res.json("record deleted");
+  });
+});
+
+//Update route for the OneTimePurchase
+app.put("/api/onetime-purchase/:id", function (req, res) {
+  db.oneTimePurchase.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  }).then(function (data) {
+    res.json(data);
+  });
+});
 
   //Get route for the necessary expense
   app.get("/api/necessary-expense", function (req, res) {
@@ -229,7 +274,7 @@ module.exports = function (app) {
       where: {
         id: req.params.id
       }
-    })
+    })    
   });
 
   //Update route for the unnecessary expense

@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+
     $('.dropdown-trigger').dropdown();
 
     displayFinancials('all')
@@ -12,12 +13,30 @@ $(document).ready(function () {
     function displayFinancials(budgetType) {
         var financials = $('#financials')
         $(financials).empty()
+        var oneTimePurchase = $('#oneTimePurchase');
+        $(oneTimePurchase).empty()
         $.ajax({ method: "GET", url: "/api/all" }).then(function (res) {
             console.log(res)
             console.log(budgetType)
+            if (budgetType ==='all' && res.oneTimePurchase.length === 1) {
+                var saving = 0;
+                for (const row of res.income) {
+                    saving = saving + row.amount
+                }
+                for (const row of res.necessaryExpenses) {
+                    saving = saving - row.amount
+                }
+                for (const row of res.unnecessaryExpenses) {
+                    saving = saving - row.amount
+                }
+                $(oneTimePurchase).append(createCard({heading:"Daily Saving", amount: "$" + saving + " per day"}, "saving"))
+                $(oneTimePurchase).append(createCard({heading:"One Time Purchase",title:res.oneTimePurchase[0].title, amount: "Total Cost : $" + res.oneTimePurchase[0].amount }, "onetime"))
+                $(oneTimePurchase).append(createCard({heading:"One Time Purchase Estimate", amount: "You can purchase after " + Math.floor(res.oneTimePurchase[0].amount/saving) + " days" }, "estimate"))
+            }
+            
             if (budgetType ==='all' || budgetType === 'income') {
                 for (const row of res.income) {
-                    console.log('running')
+                    
                     var card = createCard(row, "income")
                     console.log(card)
                     $(financials).append(card)
@@ -41,6 +60,23 @@ $(document).ready(function () {
     function createCard(rowElement, budgetType) {
 
         console.log(rowElement)
+        if (budgetType === "saving" || budgetType === "onetime" || budgetType === "estimate") {
+            var card = $('<div class="card green lighten-4" style="display: inline-block; margin-right: 2%">')
+            var cardContent = $('<div class="card-content">')
+            var cardTitle = $('<span class="card-title">')
+            cardTitle.text(rowElement.heading)
+            if(rowElement.title !== ""){
+            var expenseType = $('<p>')
+            expenseType.text(rowElement.title)
+            }
+            var averageDailyCost = $('<p>')
+            averageDailyCost.text(rowElement.amount)
+            cardContent.append(cardTitle)
+            if(rowElement.title !== ""){cardContent.append(expenseType)}
+            cardContent.append(averageDailyCost)
+            card.append(cardContent)
+
+        }
 
         if (budgetType === "income") {
 
