@@ -3,7 +3,7 @@ var moment = require('moment')
 module.exports = function (sequelize, DataTypes) {
     var NecessaryExpense = sequelize.define("NecessaryExpense", {
         title: DataTypes.STRING,
-        amount: DataTypes.INTEGER,
+        amount: DataTypes.FLOAT,
         frequency: DataTypes.STRING,
         exceptions: DataTypes.TEXT,
         startDate: {

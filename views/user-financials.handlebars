@@ -14,6 +14,7 @@
 </center>
 
 <div class="container">
+
   <div class="row">
     <div class="col s12 z-depth-1">
       <ul class="collection with-header" style="padding:0px">
@@ -58,16 +59,14 @@
           <button type="submit" style="margin-top: 20px; margin-left:20px" class="btn green add-income">Add</button>
         </div>
       </div>
-
     </div>
   </div>
-
 
   <div class="row">
     <div class="col s12 z-depth-1">
       <ul class="collection with-header" style="padding:0px">
         <li class="green lighten-4 collection-header">
-          <h3>Necessary Expense</h3>
+          <h3>Necessary Expenses</h3>
         </li>
         {{#each necessaryExpenses}}
         <li class="collection-item">
@@ -108,10 +107,7 @@
         </div>
       </div>
     </div>
-
-
   </div>
-
 
   <div class="row">
     <div class="col s12 z-depth-1">
@@ -158,8 +154,45 @@
             class="btn green add-unnecessary">Add</button>
         </div>
       </div>
+    </div>
+  </div>
 
-
+  <div class="row">
+    <div class="col s12 z-depth-1" id="one-time-display">
+      <ul class="collection with-header" style="padding:0px">
+        <li class="green lighten-4 collection-header">
+          <h3>One Time Expenses</h3><br>
+        </li>
+        {{#if this.oneTimePurchase}}
+        {{#each oneTimePurchase}}
+        <li class="collection-item">
+          <strong>Title: </strong>{{this.title}}<br>
+          <strong>Amount: $</strong>{{this.amount}}<br>
+          <button class="green lighten-4 btn" style="margin-top: 5px"><i data-id="{{this.id}}"
+              class="remove-oneTimePurchase green-text material-icons">delete</i></button>
+        </li>
+        {{/each}}
+        {{/if}}
+      </ul>
+      <div class="row">
+        <p style="margin-left:2%">Enter the information for singular purchases you would like to make in the future</p>
+        <div class="col s12 m8 l6">
+          <label for="oneTimePurchase-title">Title: </label>
+          <input type="text" id="oneTimePurchase-title" name="oneTimePurchase-title">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col s10 m8 l6">
+          <div class="input-wrapper">
+            <label for="oneTimePurchase-amount">Amount: </label>
+            <input type="text" id="oneTimePurchase-amount" class="dollar-input" name="oneTimePurchase-amount">
+            <span class="unit green-text">$</span>
+          </div>
+        </div>
+        <div class="col s2">
+          <button type="submit" style="margin-top: 20px; margin-left:20px" class="btn green add-income">Add</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

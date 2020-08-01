@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
 
 var UnnecessaryExpense =sequelize.define("UnnecessaryExpense", {
     title: DataTypes.STRING,
-    amount: DataTypes.INTEGER,
+    amount: DataTypes.FLOAT,
     frequency: {
         type: DataTypes.STRING,
         allowNull: false
