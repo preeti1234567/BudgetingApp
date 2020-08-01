@@ -81,7 +81,8 @@ module.exports = function (app) {
           return {
             title: otp.title,
             amount: (otp.amount),
-            id: otp.id
+            id: otp.id,
+            date: otp.date
           }       
       })
     }

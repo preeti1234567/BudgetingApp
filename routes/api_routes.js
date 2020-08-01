@@ -54,9 +54,9 @@ module.exports = function (app) {
 
   app.get("/api/all", async (req, res) => {
     var userId = req.user.id
-    var income = await db.Income.findAll({ where: { userId: userId } })
-    var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })
-    var unnecessaryExpenses = await db.UnnecessaryExpense.findAll({ where: { userId: userId } })
+    var income = await db.Income.findAll({ where: { userId: userId} })
+    var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId} })
+    var unnecessaryExpenses = await db.UnnecessaryExpense.findAll({ where: { userId: userId} })
     var oneTimePurchase = await db.oneTimePurchase.findAll({ where: { userId: userId } })
     expenseObj = { income: income, necessaryExpenses: necessaryExpenses, unnecessaryExpenses: unnecessaryExpenses,oneTimePurchase: oneTimePurchase}
     res.json(expenseObj)
@@ -80,25 +80,36 @@ module.exports = function (app) {
     var income = JSON.parse(expenseObj.income)
     var unnecessaryExpenses = JSON.parse(expenseObj.unnecessaryExpenses)
     var necessaryExpenses = JSON.parse(expenseObj.necessaryExpenses)
+    var oneTimePurchase = JSON.parse(expenseObj.oneTimePurchase)
     filterExceptions(unnecessaryExpenses, date)
 
     var totalSavings = 0
+    console.log(totalSavings)
     for (const row of income) {
       if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
-        totalSavings += row.amount
+        totalSavings += parseFloat(row.amount)
+        console.log(totalSavings)
       }
     }
     for (const row of unnecessaryExpenses) {
       if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
-        totalSavings -= row.amount
+        totalSavings -= parseFloat(row.amount)
       }
     }
     for (const row of necessaryExpenses) {
       if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) >= parseInt(date))) {
-        totalSavings -= row.amount
+        totalSavings -= parseFloat(row.amount)
+        console.log(totalSavings)
       }
     }
-
+    for (const row of oneTimePurchase) {
+      if (row.date && parseInt(date) === parseInt(row.date)) {
+        totalSavings -= parseFloat(row.amount)
+        console.log(totalSavings)
+      }
+    }
+    console.log(108)
+    console.log(totalSavings)
     return { dailySaving: totalSavings, date: date }
   }
 
@@ -109,7 +120,7 @@ module.exports = function (app) {
     var expenseObj = req.body
 
     var savingsData = getSavingsforDate(expenseObj, date)
-
+  
     res.json(savingsData)
   });
 
