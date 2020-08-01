@@ -1,88 +1,137 @@
 <script src="/js/user-financials.js"></script>
 <nav>
-    <div class="nav-wrapper green lighten-4">
-      <a href="#" class="brand-logo green lighten-4 black-text" style="margin-left: 3%;">FinanChill</a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li><a class="black-text"href="/dashboard">Dashboard</a></li>
-        <li><a class="black-text" href="/userfinancials">Manage User Financials</a></li>
-        <li><a class="black-text" href="/api/logout">Logout</a></li>
-      </ul>
+  <div class="nav-wrapper green lighten-4">
+    <a href="#" class="brand-logo green lighten-4 black-text" style="margin-left: 3%;">FinanChill</a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a class="black-text" href="/dashboard">Dashboard</a></li>
+      <li><a class="black-text" href="/userfinancials">Manage User Financials</a></li>
+      <li><a class="black-text" href="/api/logout">Logout</a></li>
+    </ul>
+  </div>
+</nav>
+<center>
+  <h1>User Financials</h1>
+</center>
+
+
+<div class="row" style="margin-left: 70px">
+  <div class = "col m11 s12 z-depth-1">
+  <ul class="collection with-header" style="padding:0px">
+    <li class="green lighten-4 collection-header">
+      <h3>Income</h3>
+    </li>
+    {{#each income}}
+    <li class="collection-item">
+      <strong>Title: </strong>{{this.title}}<br>
+      <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+      <button class="green lighten-4 btn" style = "margin-top: 5px"><i data-id="{{this.id}}"
+          class="remove-income green-text material-icons">delete</i></button>
+    </li>
+    {{/each}}
+  </ul>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="job">Job Title: </label>
+    <input type="text" id="job" name="job">
     </div>
-  </nav>
-<center><h1>User Financials</h1></center>
-<h3>Income</h3>
-{{#each income}}
-    <ul>
-        <li>
-            Title: {{this.title}}<br>
-            Average monthly amount: ${{this.amount}}<br>
-            <hr>
-        </li>
-    </ul>
-{{/each}}
-<label for = "job">Job Title: </label>
-<input type = "text" id = "job" name = "job">
-<label for = "income-amount">Amount: </label>
-<input type = "text" id = "income-amount" name = "income-amount">
-
-<div class="input-field col s12">
-    <select style = "display:block" id="income-frequency">
-      <option>Choose your option</option>
-      <option value="daily">Daily</option>
-    <option value="monthly">Monthly</option>
-    <option value="yearly">Yearly</option>
-    </select>
+    </div>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="income-amount">Amount: </label>
+    <input type="text" id="income-amount" name="income-amount">
+    </div>
+    </div>
+    <div class="input-field col s6">
+      <select style="display:block" id="income-frequency">
+        <option>Frequency</option>
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+    </div>
+    <br>
+    <button type="submit" style = "margin-bottom: 20px" class="btn green add-income">Add</button>
   </div>
-<br>
-<button type = "submit" class = "add-income">Add</button>
-<h3>Necessary Expenses</h3>
-{{#each necessaryExpenses}}
-    <ul>
-        <li>
-            Title: {{this.title}}<br>
-            Average monthly cost: ${{this.amount}}<br>
-        </li>
-        
-    </ul>
-{{/each}}
-<label for = "necessary-expense">Expense: </label>
-<input type = "text" id = "necessary-expense" name = "necessary-expense">
-<label for = "necessary-amount">Amount: </label>
-<input type = "text" id = "necessary-amount" name = "necessary-amount">
+</div>
 
-<div class="input-field col s12">
-    <select style = "display:block" id="necessary-frequency">
-      <option>Choose your option</option>
-      <option value="daily">Daily</option>
-    <option value="monthly">Monthly</option>
-    <option value="yearly">Yearly</option>
-    </select>
+
+<div class="row" style="margin-left: 70px">
+  <div class = "col m11 s12 z-depth-1">
+  <ul class="collection with-header" style="padding:0px">
+    <li class="green lighten-4 collection-header">
+      <h3>Necessary Expense</h3>
+    </li>
+    {{#each necessaryExpenses}}
+    <li class="collection-item">
+      <strong>Title: </strong>{{this.title}}<br>
+      <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+      <button class="green lighten-4 btn" style = "margin-top: 5px"><i data-id="{{this.id}}"
+          class="remove-necessary green-text material-icons">delete</i></button>
+    </li>
+    {{/each}}
+  </ul>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="necessary-expense">Expense Title: </label>
+    <input type="text" id="necessary-expense" name="necessary-expense">
+    </div>
+    </div>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="necessary-amount">Amount: </label>
+    <input type="text" id="necessary-amount" name="necessary-amount">
+    </div>
+    </div>
+    <div class="input-field col s6">
+      <select style="display:block" id="necessary-frequency">
+        <option>Frequency</option>
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+    </div>
+    <br>
+    <button type="submit" style = "margin-bottom: 20px" class="btn green add-necessary">Add</button>
   </div>
-<br>
-<button type = "submit" class = "add-necessary">Add</button>
-<h3>Unnecessary Expenses</h3>
-{{#each unnecessaryExpenses}}
-    <ul>
-        <li>
-            Title: {{this.title}}<br>
-            Average monthly cost: ${{this.amount}}<br>
-        </li>
-        
-    </ul>
-{{/each}}
+</div>
 
-<label for = "unnecessary-expense">Expense: </label>
-<input type = "text" id = "unnecessary-expense" name = "unnecessary-expense">
-<label for = "unnecessary-amount">Amount: </label>
-<input type = "text" id = "unnecessary-amount" name = "unnecessary-amount">
 
-<div class="input-field col s12">
-    <select style = "display:block" id="unnecessary-frequency">
-      <option>Choose your option</option>
-      <option value="daily">Daily</option>
-    <option value="monthly">Monthly</option>
-    <option value="yearly">Yearly</option>
-    </select>
+<div class="row" style="margin-left: 70px">
+  <div class = "col m11 s12 z-depth-1">
+  <ul class="collection with-header" style="padding:0px">
+    <li class="green lighten-4 collection-header">
+      <h3>Unnecessary Expenses</h3>
+    </li>
+    {{#each unnecessaryExpenses}}
+    <li class="collection-item">
+      <strong>Title: </strong>{{this.title}}<br>
+      <strong>Average monthly amount: $</strong>{{this.amount}}<br>
+      <button class="green lighten-4 btn" style = "margin-top: 5px"><i data-id="{{this.id}}"
+          class="remove-unnecessary green-text material-icons">delete</i></button>
+    </li>
+    {{/each}}
+  </ul>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="unnecessary-expense">Expense Title: </label>
+    <input type="text" id="unnecessary-expense" name="unnecessary-expense">
+    </div>
+    </div>
+    <div class = "row">
+    <div class = "col s6">
+    <label for="unnecessary-amount">Amount: </label>
+    <input type="text" id="unnecessary-amount" name="unnecessary-amount">
+    </div>
+    </div>
+    <div class="input-field col s6">
+      <select style="display:block" id="unnecessary-frequency">
+        <option>Frequency</option>
+        <option value="daily">Daily</option>
+        <option value="monthly">Monthly</option>
+        <option value="yearly">Yearly</option>
+      </select>
+    </div>
+    <br>
+    <button type="submit" style = "margin-bottom: 20px" class="btn green add-unnecessary">Add</button>
   </div>
-<br>
-<button type = "submit" class = "add-unnecessary">Add</button>
+</div>
