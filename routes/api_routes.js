@@ -1,9 +1,5 @@
 var db = require("../models")
 var passport = require("../config/passport");
-const income = require("../models/income");
-module.exports = function (app) {
-  //Server routes go here
-}
 
 module.exports = function (app) {
 
@@ -275,31 +271,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
     db.User.create(req.body);
     res.json(req.body);
   });
-
-  //Get route for the daily budget
-  app.get("/api/daily-budget", function (req, res) {
-    db.DailyBudget.findAll({}).then(function (data) {
-      res.json(data);
-    });
-  });
-
-  //Post route for the daily budget
-  app.post("/api/daily-budget", function (req, res) {
-    db.DailyBudget.create(req.body);
-    res.json(req.body);
-  });
-
-  //Update route for the daily budget
-  app.put("/api/daily-budget/:id", function (req, res) {
-    db.DailyBudget.update(req.body, {
-      where: {
-        id: req.params.id
-      }
-    }).then(function (data) {
-      res.json(data);
-    });
-  });
-
 
 };
 
