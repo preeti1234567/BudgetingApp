@@ -90,7 +90,6 @@ $(function () {
     else if($("#necessary-frequency").val().trim() === "daily"){
       newAmount = $("#necessary-amount").val().trim()
     }
-    console.log(newAmount)
     var newNecEx = {
       title: $("#necessary-expense").val().trim(),
       amount: newAmount,
@@ -103,7 +102,6 @@ $(function () {
       data: newNecEx
     }).then(
       function () {
-        console.log("created new income");
         location.reload();
       }
     );
@@ -138,7 +136,6 @@ $(function () {
       data: newUnEx
     }).then(
       function () {
-        console.log("created new income");
         location.reload();
       }
     );
@@ -164,7 +161,6 @@ $(function () {
       type: "Delete"
     }).then(
       function () {
-        console.log("onetime-purchase deleted")
         location.reload();
       }
     );
