@@ -23,10 +23,8 @@ module.exports = function (app) {
   app.post("/api/signup", (req, res) => {
     // When the user signs up, send a signup request to 
     db.User.create(req.body).then(function (result) {
-      console.log("Successfully redirecting")
       res.send("Signed up")
     }).catch(err => {
-      console.log(err)
       res.status(404).json(err)
     })
 
@@ -86,11 +84,9 @@ module.exports = function (app) {
     filterExceptions(unnecessaryExpenses, date)
 
     var totalSavings = 0
-    console.log(totalSavings)
     for (const row of income) {
       if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) > parseInt(date))) {
         totalSavings += parseFloat(row.amount)
-        console.log(totalSavings)
       }
     }
     for (const row of unnecessaryExpenses) {
@@ -101,24 +97,19 @@ module.exports = function (app) {
     for (const row of necessaryExpenses) {
       if ((parseInt(row.startDate) <= parseInt(date)) && (!row.endDate || parseInt(row.endDate) > parseInt(date))) {
         totalSavings -= parseFloat(row.amount)
-        console.log(totalSavings)
       }
     }
     for (const row of oneTimePurchase) {
       if (row.date && parseInt(date) === parseInt(row.date)) {
         totalSavings -= parseFloat(row.amount)
-        console.log(totalSavings)
       }
     }
-    console.log(108)
-    console.log(totalSavings)
     return { dailySaving: totalSavings, date: date }
   }
 
   app.post("/api/dailyBudget/:date", (req, res) => {
 
     var date = req.params.date
-    console.log(req.body)
     var expenseObj = req.body
 
     var savingsData = getSavingsforDate(expenseObj, date)
@@ -158,17 +149,6 @@ module.exports = function (app) {
       res.json(req.body);
     });
 
-  });
-
-
-
-  //Delete route for the income
-  app.delete("/api/income/:id", function (req, res) {
-    db.Income.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
   });
 
   //Update route for the income
@@ -239,15 +219,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
     });
   });
 
-  //Delete route for the necessary expense
-  app.delete("/api/necessary-expense/:id", function (req, res) {
-    db.NecessaryExpense.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-  });
-
   //Update route for the necessary expense
   app.put("/api/necessary-expense/:id", function (req, res) {
     db.NecessaryExpense.update(req.body, {
@@ -258,7 +229,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
       res.json(data);
     });
   });
-
 
   //Get route for the unnecessary expense
   app.get("/api/unnecessary-expense", function (req, res) {
@@ -279,15 +249,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
       res.json(result)
     })
       ;
-  });
-
-  //Delete route for the unnecessary expense
-  app.delete("/api/unnecessary-expense/:id", function (req, res) {
-    db.UnecessaryExpense.destroy({
-      where: {
-        id: req.params.id
-      }
-    })    
   });
 
   //Update route for the unnecessary expense
@@ -315,26 +276,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
     res.json(req.body);
   });
 
-  //Delete route for the user
-  app.delete("/api/user/:id", function (req, res) {
-    db.User.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-  });
-
-  //Update route for the user
-  app.put("/api/user/:id", function (req, res) {
-    db.User.update(req.body, {
-      where: {
-        id: req.params.id
-      }
-    }).then(function (data) {
-      res.json(data);
-    });
-  });
-
   //Get route for the daily budget
   app.get("/api/daily-budget", function (req, res) {
     db.DailyBudget.findAll({}).then(function (data) {
@@ -347,17 +288,6 @@ app.put("/api/onetime-purchase/:id", function (req, res) {
     db.DailyBudget.create(req.body);
     res.json(req.body);
   });
-
-  //Delete route for the daily budget
-  app.delete("/api/daily-budget/:id", function (req, res) {
-    db.DailyBudget.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-  });
-
-
 
   //Update route for the daily budget
   app.put("/api/daily-budget/:id", function (req, res) {

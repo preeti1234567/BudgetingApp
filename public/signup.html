@@ -15,13 +15,19 @@
         <div class="row" style="margin-top: 8%;">
             <div class="col s12 m6 l6 push-m3 push-l3 center-align">
                 <img style="width: 60%;" src="./images/logo.png">
-                <h5 class="slogan" style="font-family: 'Solway', serif;">Register to start <span class="green-text">$</span>aving</h5>
+                <h5 class="slogan" style="font-family: 'Solway', serif;">Register to start <span
+                        class="green-text">$</span>aving</h5>
                 <form>
                     <input type="text" placeholder="username" id="signup-username" style="text-align: center;">
                     <input type="password" placeholder="password" id="signup-password" style="text-align: center;">
+                    <div style="display: none" id="alert" class = "white-text red lighten-2 z-depth-1" role="alert">
+                        <span aria-hidden="true"></span>
+                        <span class="msg"></span>
+                    </div>
                     <div class="center-align">
                         <a class="waves-effect green btn-small" id="signup-submit" style="margin-top: 3%;">Register!</a>
-                        <p>Or<a href="#" id="existing-account" style="color: green;"> sign in </a>with an existing account</p>
+                        <p>Or<a href="#" id="existing-account" style="color: green;"> sign in </a>with an existing
+                            account</p>
                     </div>
                 </form>
             </div>
@@ -38,10 +44,31 @@
             var password = $("#signup-password").val().trim()
             $.ajax({ method: "POST", url: "/api/signup", data: { username: username, password: password } }).then(function (res) {
                 location.assign("/introduction")
-            })
+            }).catch(handleLoginErr)
         })
 
-        $('#existing-account').on("click", function(event) {
+        function handleLoginErr(err) {
+            var type = err.responseJSON.errors[0].type;
+            var path = err.responseJSON.errors[0].path;
+            if (type === "unique violation") {
+                $("#alert .msg").text("The username must be unique");
+                $("#alert").fadeIn(500);
+            }
+            if (path === "username") {
+                if (type === "Validation error") {
+                    $("#alert .msg").text("Username field must be filled");
+                    $("#alert").fadeIn(500);
+                }
+            }
+            if (path === "password"){
+                if (type === "Validation error") {
+                    $("#alert .msg").text("Password field must be filled");
+                    $("#alert").fadeIn(500);
+                }
+            }
+        }
+
+        $('#existing-account').on("click", function (event) {
             event.preventDefault()
             location.assign('/login')
         })

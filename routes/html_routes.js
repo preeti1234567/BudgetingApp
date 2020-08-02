@@ -97,7 +97,6 @@ module.exports = function (app) {
           return element !== undefined;
        });
     }
-    console.log(data);
     res.render("user-financials", data)
   })
 
