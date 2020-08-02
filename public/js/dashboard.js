@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('.sidenav').sidenav();
-      });
+    });
 
     $('.dropdown-trigger').dropdown();
 
@@ -29,17 +29,17 @@ $(document).ready(function () {
         }
     }
 
-    $(document).on("click", ".purchase-btn", function() {
+    $(document).on("click", ".purchase-btn", function () {
         var id = $(this).attr("data-id")
         console.log("working")
-        $.ajax({method: "PUT", url: "/api/onetime-purchase/" + id, data: {date: moment().format("YYYYMMDD")}}).then(function(res) {
+        $.ajax({ method: "PUT", url: "/api/onetime-purchase/" + id, data: { date: moment().format("YYYYMMDD") } }).then(function (res) {
             location.reload()
         })
     })
 
-    $(document).on("click", ".onetime-delete", function() {
+    $(document).on("click", ".onetime-delete", function () {
         var id = $(this).attr("data-id")
-        $.ajax({method: "DELETE", url:"/api/onetime-purchase/" + id}).then(function() {
+        $.ajax({ method: "DELETE", url: "/api/onetime-purchase/" + id }).then(function () {
             location.reload()
         })
     })
@@ -87,7 +87,7 @@ $(document).ready(function () {
                 }
             }
 
-            financialsArr.sort((a,b) => Math.abs($(b).attr("data-amount")) - Math.abs($(a).attr("data-amount")))
+            financialsArr.sort((a, b) => Math.abs($(b).attr("data-amount")) - Math.abs($(a).attr("data-amount")))
 
             for (const card of financialsArr) {
                 $(financials).append(card)
@@ -97,19 +97,20 @@ $(document).ready(function () {
                 var saving = 0;
                 for (const row of res.income) {
                     if (!row.endDate) {
-                        saving = saving + row.amount
+                        saving = saving + parseFloat(row.amount)
                     }
                 }
                 for (const row of res.necessaryExpenses) {
                     if (!row.endDate) {
-                        saving = saving - row.amount
+                        saving = saving - parseFloat(row.amount)
                     }
                 }
                 for (const row of res.unnecessaryExpenses) {
                     if (!row.endDate) {
-                        saving = saving - row.amount
+                        saving = saving - parseFloat(row.amount)
                     }
                 }
+
 
                 for (const row of res.oneTimePurchase) {
                     if (!row.date) {
@@ -118,19 +119,20 @@ $(document).ready(function () {
                         oneTimePurchase.show()
                     }
                 }
+
             }
         })
     }
 
     function createOneTime(rowElement, savings) {
-        var card = $(`<div class="card blue-grey lighten-3 onetime-card center-align" style="display: inline-block" data-amount=${rowElement.amount}>`)
+        var card = $(`<div class="card blue-grey lighten-3 onetime-card center-align" style="display: inline-block; margin-right: 2%" data-amount=${rowElement.amount}>`)
         var cardContent = $('<div class="card-content">')
         var cardTitle = $('<span class="card-title title-text">')
         cardTitle.text(rowElement.title)
         var purchaseCost = $('<p>')
-        purchaseCost.text("Cost: $" + parseInt(rowElement.amount))
+        purchaseCost.text("Cost: $" + Math.ceil(rowElement.amount))
         var averageDailySavings = $('<p>')
-        averageDailySavings.text("Current daily saving: $" + parseInt(savings))
+        averageDailySavings.text("Current daily saving: $" + Math.ceil(savings))
         var suggestion = $('<p>')
         if (savings <= 0) {
             suggestion.text("Right now, you are not saving enough to make this purchase")
@@ -165,7 +167,7 @@ $(document).ready(function () {
             var expenseType = $('<p>')
             expenseType.text("Income")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("+ $" + parseInt(rowElement.amount) + " per day")
+            averageDailyCost.text("+ $" + Math.ceil(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
@@ -181,7 +183,7 @@ $(document).ready(function () {
             var expenseType = $('<p>')
             expenseType.text("Necessary Expense")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("- $" + parseInt(rowElement.amount) + " per day")
+            averageDailyCost.text("- $" + Math.ceil(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
@@ -198,7 +200,7 @@ $(document).ready(function () {
             var expenseType = $('<p>')
             expenseType.text("Unnecessary expense")
             var averageDailyCost = $('<p>')
-            averageDailyCost.text("- $" + parseInt(rowElement.amount) + " per day")
+            averageDailyCost.text("- $" + Math.ceil(rowElement.amount) + " per day")
             cardContent.append(cardTitle)
             cardContent.append(expenseType)
             cardContent.append(averageDailyCost)
@@ -290,6 +292,13 @@ $(document).ready(function () {
         };
 
         new Chartist.Line('.ct-chart', data)
+
+        if (yCounter < 0) {
+            $("#budget-suggestion").text(`Since you started using FinanChill, you have spent $${Math.ceil(Math.abs(yCounter))} more than you have saved. You may want to consider cutting back you spending.`)
+        }
+        else {
+            $("#budget-suggestion").text(`Since you started using FinanChill, you have saved $${Math.floor(yCounter)}!`)
+        }
     }
 
     console.log("Im here")
