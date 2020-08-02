@@ -19,6 +19,24 @@
 
 ## Installation
 
+To access this code on your local machine, follow these steps:
+
+1. Clone the repository onto your local machine using terminal:
+```
+git clone https://github.com/GabeSucich/BudgetingApp.git
+```
+<br>
+
+2. Navigate into the cloned directory and install the npm dependencies contained in the package.json file by running the following in terminal:
+```
+npm install
+```
+<br>
+
+3. Ensure that you have [mySQL workbench](https://www.mysql.com/products/workbench/) installed and running on your computer. In the `config.json` file within the `config` directory, update the information contained within the `development` object to match your mySQL credentials.
+
+4. In your mySQL workbench, copy and paste the code in `schema.sql` withing the `Db` directory, and run to configure development databse.
+
 <br>
 <hr>
 <br>
@@ -48,6 +66,8 @@
 <br>
 
 ## Application Functionality
+
+### [See deployed application](https://desolate-sierra-38032.herokuapp.com/)
 
 FinanChill allows you to manage all the different facets of your budget in one place. On the Financials page, you can add new expenses. Here, our user is adding a morning cup of coffee to the unnecessary expense section of the budget.
 
