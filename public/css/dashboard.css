@@ -23,3 +23,7 @@
     font-family: 'Solway', serif;
 }
 
+.ct-chart .ct-point {
+    visibility: hidden;
+}
+

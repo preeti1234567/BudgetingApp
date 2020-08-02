@@ -18,6 +18,8 @@ $(document).ready(function () {
 
     function completeLabel(id) {
         switch (id) {
+            case "all":
+                return "Financials"
             case "necessary":
                 return "Expenses"
             case "unnecessary":
@@ -134,15 +136,17 @@ $(document).ready(function () {
         var averageDailySavings = $('<p>')
         averageDailySavings.text("Current daily saving: $" + Math.ceil(savings))
         var suggestion = $('<p>')
+        var cardButton = $(`<br><a style="margin-left:0" class="btn-flat black-text purchase-btn" data-id=${rowElement.id}>Make Purchase</a>`)
+        var deleteButton = $(`<a class="btn-floating btn-small waves-effect waves-light blue-grey darken-4 onetime-delete" data-id=${rowElement.id}><i class="material-icons">clear</i></a>`)
         if (savings <= 0) {
             suggestion.text("Right now, you are not saving enough to make this purchase")
+            suggestion.css("font-weight", "bold")
+            cardButton.html("Make Purchase <span class='red-text' style='font-weight: bolder'>(Not Recommended)</span>")
         }
         else {
             var time = Math.ceil(rowElement.amount / savings)
             suggestion.text("You will save enough or this purchase after " + time + " day(s)")
         }
-        var cardButton = $(`<br><a style="margin-left:0" class="btn-flat black-text purchase-btn" data-id=${rowElement.id}>Make Purchase</a>`)
-        var deleteButton = $(`<a class="btn-floating btn-small waves-effect waves-light blue-grey darken-4 onetime-delete" data-id=${rowElement.id}><i class="material-icons">clear</i></a>`)
         cardContent.append(cardTitle)
         cardContent.append(purchaseCost)
         cardContent.append(averageDailySavings)
@@ -252,7 +256,6 @@ $(document).ready(function () {
                     queryUrl = "/api/dailyBudget/" + date
 
                     $.ajax({ method: "POST", url: queryUrl, data: expenseObj }).then(function (result) {
-                        console.log(result)
                         budgetHistory.push(result)
                         counter++
                         makeCall(counter, expenseObj)
