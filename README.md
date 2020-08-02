@@ -1,13 +1,73 @@
 # FinanChill
 
+<br>
+
+
 ## Contents
 
-* 
+* [Installation](#Installation)
+* [Built With](#built-with)
+    * [npm Packages](#npm-packages)
 * [Application Functionality](#application-functionality)
     * [See Deployed Application](https://desolate-sierra-38032.herokuapp.com/)
-* [Developers]
+* [Code Snippets](#code-snippets)
+* [Developers](#developers)
+
+<br>
+<hr>
+<br>
+
+## Installation
+
+To access this code on your local machine, follow these steps:
+
+1. Clone the repository onto your local machine using terminal:
+```
+git clone https://github.com/GabeSucich/BudgetingApp.git
+```
+<br>
+
+2. Navigate into the cloned directory and install the npm dependencies contained in the package.json file by running the following in terminal:
+```
+npm install
+```
+<br>
+
+3. Ensure that you have [mySQL workbench](https://www.mysql.com/products/workbench/) installed and running on your computer. In the `config.json` file within the `config` directory, update the information contained within the `development` object to match your mySQL credentials.
+
+4. In your mySQL workbench, copy and paste the code in `schema.sql` withing the `Db` directory, and run to configure development databse.
+
+<br>
+<hr>
+<br>
+
+## Built with
+
+* [HTML/CSS](https://developer.mozilla.org/en-US/docs/Web/HTML)
+* [Materialize](https://materializecss.com/)
+* [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+* [jQuery](https://jquery.com/)
+
+### npm Packages
+
+* [express](https://www.npmjs.com/package/express)
+* [express-handlebars](https://www.npmjs.com/package/express-handlebars)
+* [express-session](https://www.npmjs.com/package/express-session)
+* [mysql2](https://www.npmjs.com/package/mysql2)
+* [sequelize](https://www.npmjs.com/package/sequelize)
+* [passport](https://www.npmjs.com/package/passport)
+* [passport-local](https://www.npmjs.com/package/passport-local)
+* [bcryptjs](https://www.npmjs.com/package/bcryptjs)
+* [moment](https://www.npmjs.com/package/moment)
+
+
+<br>
+<hr>
+<br>
 
 ## Application Functionality
+
+### [See deployed application](https://desolate-sierra-38032.herokuapp.com/)
 
 FinanChill allows you to manage all the different facets of your budget in one place. On the Financials page, you can add new expenses. Here, our user is adding a morning cup of coffee to the unnecessary expense section of the budget.
 
@@ -42,3 +102,39 @@ Now, the user heeds FinanChill's suggestion and decides to cut back on spending.
 As a final example of FinanChill's functionality, consider if the user had not gotten in the boating accident, but instead decided to quit whatever job he or she is working. The day after quitting, our user's budget will not yet be negative. However, with each jobless day, less money is going out of the budget than coming in. FinanChill will process this, and change the display to recommend against future purchases to protect the user's budget.
 
 <img src="./markdown/negative.png" width="60%">
+
+<br>
+<hr>
+<br>
+
+## Code Snippets
+
+<br>
+<hr>
+<br>
+
+## Developers
+
+### Gabe Sucich
+
+<img src="./markdown/gabe.png" width="10%">
+
+* [Portfolio](https://gabesucich.github.io/UpdatedPortfolio/)
+* [Github Account](https://github.com/GabeSucich)
+
+***
+
+### Preeti Gupta
+
+<img src="./markdown/preeti.jpg" width="10%">
+
+* [Github Account](https://github.com/preeti1234567)
+
+***
+
+### Aidan Sweeny
+
+<img src="./markdown/aidan.jpg" width="10%">
+
+* [Github Account](https://github.com/AidanSweeny)
+
