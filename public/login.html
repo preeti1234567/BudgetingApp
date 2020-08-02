@@ -22,6 +22,10 @@
                 <form>
                     <input class="center-align" type="text" placeholder="username" id="login-username">
                     <input class="center-align" type="password" placeholder="password" id="login-password">
+                    <div style="display: none" id="alert" class = "white-text red lighten-2 z-depth-1" role="alert">
+                        <span aria-hidden="true"></span>
+                        <span class="msg"></span>
+                    </div>
                     <div class="center-align">
                         <a class="waves-effect green btn-small" id="login-submit" style="margin-top: 3%;">Login!</a>
                         <p>Or<a href="#" id="create-account" style="color:green"> create an account </a></p>
@@ -35,19 +39,22 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     <script>
-
         $('#login-submit').on("click", function (event) {
             event.preventDefault()
             var username = $("#login-username").val().trim()
             var password = $("#login-password").val().trim()
             $.ajax({ method: "POST", url: "/api/login", data: { username: username, password: password } }).then(function () {
                 location.assign("/dashboard")
-            })
+            }).catch(handleLoginErr)
         })
         $('#create-account').on("click", function(event) {
             event.preventDefault()
             location.assign("/signup")
         })
+        function handleLoginErr(err) {
+            $("#alert .msg").text("Username or password were not recognized");
+            $("#alert").fadeIn(500);
+        }
     </script>
 
 </body>

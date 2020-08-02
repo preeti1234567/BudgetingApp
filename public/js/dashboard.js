@@ -10,7 +10,6 @@ $(document).ready(function () {
 
     $(".finance-choice").on("click", function () {
         var id = $(this).attr('id')
-        console.log(id[0])
         var upperCase = id[0].toUpperCase() + id.slice(1) + " " + completeLabel(id)
         $('#dropdown').text(upperCase)
         displayFinancials(id)
@@ -31,7 +30,6 @@ $(document).ready(function () {
 
     $(document).on("click", ".purchase-btn", function () {
         var id = $(this).attr("data-id")
-        console.log("working")
         $.ajax({ method: "PUT", url: "/api/onetime-purchase/" + id, data: { date: moment().format("YYYYMMDD") } }).then(function (res) {
             location.reload()
         })
@@ -52,15 +50,12 @@ $(document).ready(function () {
         $(oneTimePurchase).empty()
         oneTimePurchase.hide()
         $.ajax({ method: "GET", url: "/api/all" }).then(function (res) {
-            console.log(res)
-            console.log(budgetType)
 
             financialsArr = []
 
             if (budgetType === 'all' || budgetType === 'income') {
                 for (const row of res.income) {
                     if (!row.endDate) {
-                        console.log("running")
                         var card = createCard(row, "income")
                         // $(financials).append(card)
                         financialsArr.push(card)
@@ -114,7 +109,6 @@ $(document).ready(function () {
 
                 for (const row of res.oneTimePurchase) {
                     if (!row.date) {
-                        console.log(row)
                         $(oneTimePurchase).append(createOneTime(row, saving))
                         oneTimePurchase.show()
                     }
@@ -159,7 +153,6 @@ $(document).ready(function () {
 
         if (budgetType === "income") {
 
-            console.log("Making card")
             var card = $('<div class="card green lighten-4 financial-card" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content center-align">')
             var cardTitle = $('<span class="card-title title-text">')
@@ -221,7 +214,6 @@ $(document).ready(function () {
     function getDatesSince(startDate) {
         // startDate will already be stripped of dashes
         startDate = stripDateDashes(startDate)
-        console.log(startDate)
         var stopDate = moment()
         var dateArray = [];
         var currentDate = moment(startDate)
@@ -239,12 +231,10 @@ $(document).ready(function () {
             var startDate = res.startDate
             startDate = stripDateDashes(startDate)
             var dateArr = getDatesSince(startDate)
-            console.log(dateArr)
             var budgetHistory = []
 
             function makeCall(counter, expenseObj) {
                 if (counter === dateArr.length) {
-                    console.log(budgetHistory)
                     renderHistory(budgetHistory)
                 }
                 else {
@@ -252,7 +242,6 @@ $(document).ready(function () {
                     queryUrl = "/api/dailyBudget/" + date
 
                     $.ajax({ method: "POST", url: queryUrl, data: expenseObj }).then(function (result) {
-                        console.log(result)
                         budgetHistory.push(result)
                         counter++
                         makeCall(counter, expenseObj)
@@ -310,7 +299,6 @@ $(document).ready(function () {
         }
     }
 
-    console.log("Im here")
     getBudgetData()
 
 });
