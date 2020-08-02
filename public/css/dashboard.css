@@ -18,3 +18,7 @@
 .hidden {
     display: none
 }
+
+.title-text {
+    font-family: 'Solway', serif;
+}

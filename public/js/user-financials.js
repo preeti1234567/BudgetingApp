@@ -1,4 +1,7 @@
 $(function () {
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
   //----------
   $(".addOTP").on("click", function (event) {
     event.preventDefault();

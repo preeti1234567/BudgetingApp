@@ -36,8 +36,8 @@
             event.preventDefault()
             var username = $("#signup-username").val().trim()
             var password = $("#signup-password").val().trim()
-            $.ajax({ method: "POST", url: "/api/signup", data: { username: username, password: password } }).then(function (response) {
-                location.assign('/dashboard')
+            $.ajax({ method: "POST", url: "/api/signup", data: { username: username, password: password } }).then(function (res) {
+                location.assign("/introduction")
             })
         })
 

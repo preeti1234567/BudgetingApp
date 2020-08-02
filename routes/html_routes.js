@@ -26,6 +26,12 @@ module.exports = function (app) {
     }
   })
 
+  app.get("/introduction", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/intro.html"))
+    
+
+  })
+
   async function getAllInfo(userId) {
     var income = await db.Income.findAll({ where: { userId: userId } })
     var necessaryExpenses = await db.NecessaryExpense.findAll({ where: { userId: userId } })

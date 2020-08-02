@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+      });
 
     $('.dropdown-trigger').dropdown();
 
@@ -122,7 +125,7 @@ $(document).ready(function () {
     function createOneTime(rowElement, savings) {
         var card = $(`<div class="card blue-grey lighten-3 onetime-card center-align" style="display: inline-block" data-amount=${rowElement.amount}>`)
         var cardContent = $('<div class="card-content">')
-        var cardTitle = $('<span class="card-title">')
+        var cardTitle = $('<span class="card-title title-text">')
         cardTitle.text(rowElement.title)
         var purchaseCost = $('<p>')
         purchaseCost.text("Cost: $" + parseInt(rowElement.amount))
@@ -157,7 +160,7 @@ $(document).ready(function () {
             console.log("Making card")
             var card = $('<div class="card green lighten-4 financial-card" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content center-align">')
-            var cardTitle = $('<span class="card-title">')
+            var cardTitle = $('<span class="card-title title-text">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Income")
@@ -173,7 +176,7 @@ $(document).ready(function () {
         else if (budgetType === "necessary") {
             var card = $('<div class="card red lighten-2 financial-card" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content center-align">')
-            var cardTitle = $('<span class="card-title">')
+            var cardTitle = $('<span class="card-title title-text">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Necessary Expense")
@@ -190,7 +193,7 @@ $(document).ready(function () {
         else if (budgetType === "unnecessary") {
             var card = $('<div class="card red lighten-2 financial-card" style="display: inline-block; margin-right: 2%">')
             var cardContent = $('<div class="card-content center-align">')
-            var cardTitle = $('<span class="card-title">')
+            var cardTitle = $('<span class="card-title title-text">')
             cardTitle.text(rowElement.title)
             var expenseType = $('<p>')
             expenseType.text("Unnecessary expense")

@@ -24,13 +24,15 @@ module.exports = function (app) {
     // When the user signs up, send a signup request to 
     db.User.create(req.body).then(function (result) {
       console.log("Successfully redirecting")
-      res.redirect("/login")
+      res.send("Signed up")
     }).catch(err => {
       console.log(err)
       res.status(404).json(err)
     })
 
   })
+
+
 
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
 

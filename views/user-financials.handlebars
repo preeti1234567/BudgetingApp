@@ -1,16 +1,24 @@
 <script src="/js/user-financials.js"></script>
 <nav>
-  <div class="nav-wrapper green lighten-4">
-    <a href="#" class="brand-logo green lighten-4 black-text" style="margin-left: 3%;">FinanChill</a>
-    <ul class="right">
-      <li><a class="black-text" href="/dashboard">Dashboard</a></li>
-      <li><a class="black-text" href="/userfinancials">Manage User Financials</a></li>
-      <li><a class="black-text" href="/api/logout">Logout</a></li>
-    </ul>
-  </div>
-</nav>
+    <div class="nav-wrapper green lighten-4" style="padding-left: 3%">
+      <a href="#!" class="black-text brand-logo title-text">FinanChill</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons black-text">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/dashboard" class="black-text title-text">Dashboard</a></li>
+        <li><a href="/userfinancials" class="black-text title-text">Manage Financials</a></li>
+        <li><a href="/api/logout" class="black-text title-text">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav green lighten-4" id="mobile-demo">
+    <li><a href="/dashboard" class="black-text title-text">Dashboard</a></li>
+    <li><a href="/userfinancials" class="black-text title-text">Manage Financials</a></li>
+    <li><a href="/api/logout" class="black-text title-text">Logout</a></li>
+  </ul>
+
 <center>
-  <h1>User Financials</h1>
+  <h1 class="title-text">User Financials</h1>
 </center>
 
 <div class="container">
@@ -19,7 +27,7 @@
     <div class="col s12 z-depth-1">
       <ul class="collection with-header" style="padding:0px">
         <li class="green lighten-4 collection-header">
-          <h3>Income</h3>
+          <h3 class="title-text">Income</h3>
         </li>
         {{#each income}}
         <li class="collection-item">
@@ -66,7 +74,7 @@
     <div class="col s12 z-depth-1">
       <ul class="collection with-header" style="padding:0px">
         <li class="green lighten-4 collection-header">
-          <h3>Necessary Expenses</h3>
+          <h3 class="title-text">Necessary Expenses</h3>
         </li>
         {{#each necessaryExpenses}}
         <li class="collection-item">
@@ -113,7 +121,7 @@
     <div class="col s12 z-depth-1">
       <ul class="collection with-header" style="padding:0px">
         <li class="green lighten-4 collection-header">
-          <h3>Unnecessary Expenses</h3>
+          <h3 class="title-text">Unnecessary Expenses</h3>
         </li>
         {{#each unnecessaryExpenses}}
         <li class="collection-item">
@@ -161,7 +169,7 @@
     <div class="col s12 z-depth-1" id="one-time-display">
       <ul class="collection with-header" style="padding:0px">
         <li class="green lighten-4 collection-header">
-          <h3>One Time Expenses</h3><br>
+          <h3 class="title-text">One Time Expenses</h3><br>
         </li>
         {{#if this.oneTimePurchase}}
         {{#each oneTimePurchase}}

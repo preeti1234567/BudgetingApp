@@ -3,3 +3,12 @@
 .dollar-input { display: block; position: relative; left: 20px; border: 1px solid #d7d6d6; background: #fff; }
 
 .unit { position: absolute; display: block; top: 25px; z-index: 1; font-size: x-large}
+
+.title-text {
+    font-family: 'Solway', serif;
+}
+
+.btn {
+    width: 100%
+}
+
