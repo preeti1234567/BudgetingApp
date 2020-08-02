@@ -31,7 +31,6 @@ module.exports = function (sequelize, DataTypes) {
     User.hasMany(models.Income, { onDelete: "cascade" });
     User.hasMany(models.NecessaryExpense, { onDelete: "cascade" });
     User.hasMany(models.UnnecessaryExpense, { onDelete: "cascade" });
-    User.hasMany(models.dailyBudget, { onDelete: "cascade" });
     User.hasMany(models.oneTimePurchase, { onDelete: "cascade" });
   };
   return User;
