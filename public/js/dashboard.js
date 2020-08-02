@@ -291,7 +291,16 @@ $(document).ready(function () {
             series: [yData]
         };
 
-        new Chartist.Line('.ct-chart', data)
+        var chart = new Chartist.Line('.ct-chart', data)
+
+        chart.on("draw", function(context) {
+            if (yCounter < 0) {
+                context.element.attr({style: "stroke: red"})
+            }
+            else {
+                context.element.attr({style: "stroke: green"})
+            }
+        })
 
         if (yCounter < 0) {
             $("#budget-suggestion").text(`Since you started using FinanChill, you have spent $${Math.ceil(Math.abs(yCounter))} more than you have saved. You may want to consider cutting back you spending.`)
