@@ -7,7 +7,7 @@ $(function () {
     event.preventDefault();
 
     var newPurchaseAmount;
-    if($("#oneTimePurchase").val().trim() != ""){
+    if($("#oneTimePurchase").val().trim() !== ""){
       newPurchaseAmount = $("#oneTimePurchase").val().trim()
     }
    
