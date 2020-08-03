@@ -1,7 +1,7 @@
 var moment = require('moment')
 
 module.exports = function(sequelize, DataType) {
-var Income =sequelize.define("Income", {
+var Income = sequelize.define("Income", {
     title: DataType.STRING,
     amount: DataType.FLOAT,
     startDate: {

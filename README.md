@@ -1,7 +1,8 @@
 # FinanChill
 
-<br>
+FinanChill solves your budgeting needs by organizing and displaying your budget information more easily than ever. Users can enter the income, necessary, and unnecessary expenses, and FinanChill will use this information to approximate over time how much the user has saved. This information can be updated overtime as the state of the user's budget changes. The user can also add purchases that they are considering making in the future, and FinanChill will make advisements depending on the current savings progress. FinanChill brings a simple, visually oriented solution to the often daunting task of responsible budgeting.
 
+This application uses an express-based server to allow the client to be served data from a SQL database. User authentication is provided by passport, and the sequelize ORM is used to streamline the process of querying SQL data.
 
 ## Contents
 
@@ -109,6 +110,18 @@ As a final example of FinanChill's functionality, consider if the user had not g
 
 ## Code Snippets
 
+Developing this application required addressing the problem of storing past expenses and current expenses together. The solution was found in giving the expense models a start date and and end date. Income or expenses are originally initialized without and end date. "Deletion" of an expense does not remove it from the table, but fills in the end date field, signaling to the application that said expense is no longer active. Below is just the income model as an example, but each of the other three expense types are similar:
+
+<img src="./markdown/modelsSnippet.png" width="60%">
+
+***
+
+When collecting data with ajax calls to display on the client side, we encountered the difficulty of making asynchronous API calls in an ordered fashion. The solution was to create a recursive function which called itself within the callback function of the API call. This allowed the api calls to execute in a predetermined sequence, serving the client with the properly-ordered data.:
+
+<img src="./markdown/asyncSnippet.png" width="60%">
+
+
+
 <br>
 <hr>
 <br>
@@ -121,6 +134,7 @@ As a final example of FinanChill's functionality, consider if the user had not g
 
 * [Portfolio](https://gabesucich.github.io/UpdatedPortfolio/)
 * [Github Account](https://github.com/GabeSucich)
+* [LinkedIn](https://www.linkedin.com/in/gabriel-sucich-6a28a71a8/)
 
 ***
 
@@ -128,7 +142,9 @@ As a final example of FinanChill's functionality, consider if the user had not g
 
 <img src="./markdown/preeti.jpg" width="10%">
 
+* [Portfolio](https://preeti1234567.github.io/portfolio/)
 * [Github Account](https://github.com/preeti1234567)
+* [LinkedIn](https://www.linkedin.com/in/preetigupta-59a5641ab/)
 
 ***
 
@@ -136,5 +152,7 @@ As a final example of FinanChill's functionality, consider if the user had not g
 
 <img src="./markdown/aidan.jpg" width="10%">
 
+* [Portfolio](https://aidansweeny.github.io/updated-portfolio/)
 * [Github Account](https://github.com/AidanSweeny)
+* [LinkedIn](https://www.linkedin.com/in/aidan-sweeny-81075030/)
 
