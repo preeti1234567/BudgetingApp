@@ -10,7 +10,7 @@ This application uses an express-based server to allow the client to be served d
 * [Built With](#built-with)
     * [npm Packages](#npm-packages)
 * [Application Functionality](#application-functionality)
-    * [See Deployed Application](https://desolate-sierra-38032.herokuapp.com/)
+    * [See Deployed Application](https://budgetmaking.herokuapp.com/login)
 * [Code Snippets](#code-snippets)
 * [Developers](#developers)
 
